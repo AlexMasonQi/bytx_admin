@@ -30,12 +30,12 @@ public class SecurityController
     private UserQueryService userQueryService;
 
     @RequiresRoles("admin")
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/companyadmin", method = RequestMethod.GET)
     public String index(Model model)
     {
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("username", userName);
-        return "index";
+        return "admin/companyadmin";
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -43,7 +43,7 @@ public class SecurityController
     {
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("username", userName);
-        return "index";
+        return "admin/companyadmin";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
