@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bytx.admin.dao.BasicInfoDao">
+    <resultMap id="basicInfoMap" type="com.bytx.admin.entity.BasicInfo">
+        <id column="id" property="id"/>
+        <result column="basic_logo" property="basicLogo"/>
+        <result column="basic_qrcode" property="basicQrcode"/>
+        <result column="basic_address" property="basicAddress"/>
+        <result column="basic_phone" property="basicPhone"/>
+        <result column="basic_email" property="basicEmail"/>
+        <result column="basic_record" property="basicRecord"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <!--查询启用状态的公司信息-->
+    <select id="selectBasicInfoByStatus" resultMap="basicInfoMap">
+        select
+            id,
+            basic_logo,
+            basic_qrcode,
+            basic_address,
+            basic_phone,
+            basic_email,
+            basic_record,
+            status
+        from basic_info
+        where
+            status = 1
+    </select>
+</mapper>

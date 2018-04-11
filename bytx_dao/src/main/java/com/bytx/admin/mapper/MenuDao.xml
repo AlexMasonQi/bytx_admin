@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bytx.admin.dao.MenuDao">
+    <resultMap id="menuMap" type="com.bytx.admin.entity.Menu">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+        <result column="menu_url" jdbcType="VARCHAR" property="menuUrl"/>
+        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="bshow" jdbcType="INTEGER" property="bshow"/>
+        <result column="bson" jdbcType="INTEGER" property="bson"/>
+        <result column="second_parent_id" jdbcType="INTEGER" property="secondParentId"/>
+    </resultMap>
+
+    <!--查询所有一级菜单-->
+    <select id="selectAllFirstMenu" resultMap="menuMap">
+        select
+            id,
+            menu_name,
+            menu_url,
+            level,
+            parent_id,
+            bson,
+            second_parent_id
+        from menu
+        where level = 1 and bshow = 1
+    </select>
+
+    <!--查询所有二级菜单-->
+    <select id="selectAllSecondMenu" resultMap="menuMap">
+        select
+            id,
+            menu_name,
+            menu_url,
+            level,
+            parent_id,
+            bson,
+            second_parent_id
+        from menu
+        where level = 2
+    </select>
+
+    <!--查询所有三级菜单-->
+    <select id="selectAllThirdMenu" resultMap="menuMap">
+        select
+            id,
+            menu_name,
+            menu_url,
+            level,
+            parent_id,
+            bson,
+            second_parent_id
+        from menu
+        where level = 3
+    </select>
+
+    <select id="selectMenuById" resultMap="menuMap">
+        select
+            id,
+            menu_name,
+            menu_url,
+            level,
+            parent_id,
+            bshow,
+            bson
+        from menu
+        where id = #{id}
+    </select>
+
+    <select id="selectSonMenuByParentId" resultMap="menuMap">
+        select
+            id,
+            menu_name,
+            menu_url
+        from menu
+        where parent_id = #{id} and level = #{level}
+    </select>
+
+</mapper>

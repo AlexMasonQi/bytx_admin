@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bytx.admin.dao.MediaDao">
+    <resultMap id="mediaMap" type="com.bytx.admin.entity.Media">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="media_id" property="mediaId"/>
+        <result column="name" property="name"/>
+        <result column="content" property="content"/>
+        <result column="images" property="images"/>
+        <result column="tag" property="tag"/>
+    </resultMap>
+
+    <!--根据二级菜单ID查询相应媒体内容-->
+    <select id="selectMediasByParentId" resultMap="mediaMap">
+        select
+            id,
+            parent_id,
+            media_id,
+            name,
+            content,
+            images,
+            tag
+        from company_media
+        where parent_id = #{parentId}
+    </select>
+
+</mapper>

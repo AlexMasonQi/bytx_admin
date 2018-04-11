@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bytx.admin.dao.RotationDao">
+    <resultMap id="rotationMap" type="com.bytx.admin.entity.Rotation">
+        <id column="id" property="id"/>
+        <result column="image_url" property="imageUrl"/>
+        <result column="description" property="description"/>
+        <result column="associate_description" property="associateDescription"/>
+        <result column="image_count" property="imageCount"/>
+    </resultMap>
+
+    <select id="selectImagesCount" resultType="java.lang.Integer">
+        select count(id)
+        from company_rotation
+    </select>
+
+    <select id="selectImageRotationByCount" resultMap="rotationMap">
+        select
+            id,
+            image_url,
+            description,
+            associate_description
+        from company_rotation
+        where image_count = #{count}
+    </select>
+</mapper>

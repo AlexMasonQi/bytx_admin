@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bytx.admin.dao.VideoDao">
+    <resultMap id="videoMap" type="com.bytx.admin.entity.Video">
+        <id column="id" property="id"/>
+        <result column="video_src" property="videoPath"/>
+        <result column="video_title" property="videoTitle"/>
+        <result column="video_content" property="videoContent"/>
+    </resultMap>
+
+    <!--根据ID查询视频-->
+    <select id="selectVideoById" resultMap="videoMap">
+        select
+            id,
+            video_src,
+            video_title,
+            video_content
+        from company_video
+        where id = #{id}
+    </select>
+
+    <!--查询所有视频-->
+    <select id="selectAllVideos" resultMap="videoMap">
+        select
+            id,
+            video_src,
+            video_title,
+            video_content
+        from company_video
+    </select>
+</mapper>

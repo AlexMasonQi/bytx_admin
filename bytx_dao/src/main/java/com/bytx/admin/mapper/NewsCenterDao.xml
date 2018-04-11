@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bytx.admin.dao.NewsCenterDao">
+    <resultMap id="newsCenterMap" type="com.bytx.admin.entity.NewsCenter">
+        <id column="news_id" property="newsId"/>
+        <result column="id" property="id"/>
+        <result column="introduction" property="introduction"/>
+        <result column="content" property="content"/>
+        <result column="image_src" property="imageSrc"/>
+        <result column="parent_id" property="parentId"/>
+    </resultMap>
+
+    <select id="selectNewsCenterById" resultMap="newsCenterMap">
+        select
+            id,
+            news_id,
+            introduction,
+            content,
+            image_src,
+            parent_id
+        from company_news
+        where id = #{id}
+    </select>
+
+    <select id="selectNewsByNewsId" resultMap="newsCenterMap">
+        select
+            id,
+            news_id,
+            introduction,
+            content,
+            parent_id
+        from company_news
+        where news_id = #{newsId}
+    </select>
+
+    <select id="selectthreeNews" resultMap="newsCenterMap">
+        select
+            id,
+            news_id,
+            introduction,
+            content,
+            parent_id
+        from company_news
+        limit 0, 3
+    </select>
+</mapper>

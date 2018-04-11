@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bytx.admin.dao.MusicDao">
+    <resultMap id="musicMap" type="com.bytx.admin.entity.Music">
+        <id column="id" property="id"/>
+        <result column="music_src" property="musicPath"/>
+        <result column="music_name" property="musicName"/>
+        <result column="music_singer" property="musicSinger"/>
+        <result column="music_time" property="musicTime"/>
+        <result column="music_lrc_src" property="musicLrcPath"/>
+        <result column="music_images" property="musicImagesPath"/>
+        <result column="music_images_count" property="musicImagesCount"/>
+    </resultMap>
+
+    <!--根据ID查询歌曲-->
+    <select id="selectSongsById" resultMap="musicMap">
+        select
+            id,
+            music_src,
+            music_name,
+            music_singer,
+            music_time,
+            music_lrc_src,
+            music_images,
+            music_images_count
+        from company_music
+        where id = #{id}
+    </select>
+
+    <!--查询所有歌曲-->
+    <select id="selectAllSongs" resultMap="musicMap">
+        select
+            id,
+            music_src,
+            music_name,
+            music_singer,
+            music_time,
+            music_lrc_src,
+            music_images,
+            music_images_count
+        from company_music
+    </select>
+</mapper>
