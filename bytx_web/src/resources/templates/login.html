@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <title>登录</title>
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/login}" method="post" class="form-horizontal" style="margin: 100px auto;width: 50%">
+        <div class="form-group">
+            <label for="uesr" class="col-sm-2 control-label">用户名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="uesr" placeholder="请输入用户名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">密码</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="password" placeholder="请输入密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">登录</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
+
+    $(function () {
+        $("#login").on("click", function () {
+            $.ajax({
+                       type: "post",
+                       dataType: "text",
+                       url: contextPath + "/login",
+                       data: {
+                           "userName": $("#uesr").val(),
+                           "userPassword": $.md5($("#password").val())
+                       },
+                       success: function (data) {
+                           if (data == "1") {
+                               console.log(data);
+                               window.location.href = contextPath + "/index";
+                           }
+                           else {
+                               console.log(data);
+                               alert("Login failed!");
+                           }
+                       }
+                   });
+        });
+    });
+
+    function kickout() {
+        var href = location.href;
+        if (href.indexOf("kickout") > 0) {
+            alert("您的设备已经在另一个地方登录，您被迫下线！");
+        }
+    }
+
+    window.onload = kickout();
+
+    /*]]>*/
+</script>
+</html>

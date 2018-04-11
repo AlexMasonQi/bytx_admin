@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <script src="./ckeditor/ckeditor.js"></script>
+  <title></title>
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+
+    <div class="container-fluid">
+      <div class="col-md-1"></div>
+      <div class="navbar-header col-md-5">
+        <a class="navbar-brand" href="#" style="width: 50px;padding: 0px">
+          <img alt="Brand" src="./images/logo.png" style="width: 100%;height: 100%;">
+        </a>
+        <p class="navbar-text">test</p>
+      </div>
+      <div class="collapse navbar-collapse col-md-3" id="bs-example-navbar-collapse-1">
+        <p class="navbar-text navbar-right">您好，admin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="#" class="navbar-link">上次登录时间为：2018/06/15</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button>退出</button>
+        </p>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </nav>
+
+  <div class="col-md-1"></div>
+  <div class="col-md-2">
+    <div class="list-group">
+      <a href="./companyadmin.html" class="list-group-item">
+        导航栏
+      </a>
+      <a href="./companybaseinfo.html" class="list-group-item">基本信息</a>
+      <a href="./companyrotation.html" class="list-group-item">轮播图</a>
+      <a href="#" class="list-group-item  active">新闻中心</a>
+      <a href="./companymedia.html" class="list-group-item">主营业务</a>
+      <a href="./companyinfo.html" class="list-group-item">概况</a>
+      <a href="./companymusic.html" class="list-group-item">音乐</a>
+      <a href="./companyvideo.html" class="list-group-item">video</a>
+    </div>
+  </div>
+  <div class="well well-lg col-md-8">
+    <button type="button" class="btn btn-primary btn-lg addCompanyNews" data-toggle="modal" data-target="#myModal">
+      增加新闻
+    </button>
+
+    <br>
+    <br>
+    <table class="table table-condensed" style="height: 50px;line-height:50xp;text-align: center">
+      <tr>
+        <td>id</td>
+        <td>分类</td>
+        <td>图片</td>
+        <td>描述</td>
+        <td>
+          操作
+        </td>
+      </tr>
+      <tr>
+        <!-- 这个ID是新闻自己的ID  不是种类的ID -->
+        <td>1</td> 
+        <td>公司新闻</td>
+        <td>
+          <img src="./images/logo2.png" alt="" style="width: 50px;">
+        </td>
+        <td>这里是描述1</td>
+        <td>
+          <span class="glyphicon glyphicon-pencil upCompanyNews" aria-hidden="true" data-toggle="modal" data-target="#myModal"></span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="glyphicon glyphicon-trash deleteCompanyNews" aria-hidden="true"></span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="glyphicon glyphicon-arrow-up topCompanyNews" aria-hidden="true"></span>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>特别关注</td>
+        <td>
+          <img src="./images/logo1.png" alt="" style="width: 50px;">
+        </td>
+        <td>这里是描述2</td>
+        <td>
+          <span class="glyphicon glyphicon-pencil upCompanyNews" aria-hidden="true" data-toggle="modal" data-target="#myModal"></span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="glyphicon glyphicon-trash deleteCompanyNews" aria-hidden="true"></span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <span class="glyphicon glyphicon-arrow-up topCompanyNews" aria-hidden="true"></span>
+        </td>
+      </tr>
+    </table>
+    <div style="text-align: center">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">1</a>
+          </li>
+          <li>
+            <a href="#">2</a>
+          </li>
+          <li>
+            <a href="#">3</a>
+          </li>
+          <li>
+            <a href="#">4</a>
+          </li>
+          <li>
+            <a href="#">5</a>
+          </li>
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">上传新闻</h4>
+            <span id="testID"></span>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="images"></label>
+                <input type="file" id="images">
+                <img src="" id="hasimage" style="width: 50px;">
+              </div>
+              <div class="form-group">
+                <label for="option">分类</label>
+                <select class="form-control sort">
+                  <option value="1">公司新闻</option>
+                  <option value="2">特别关注</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="des">内容</label>
+                <textarea name="ckeditor" class="form-control" id="ckeditor" cols="30" rows="10"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary setCompanyNews">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    CKEDITOR.replace('ckeditor');
+    $(function () {
+      // 这个不用对接
+      $(".upCompanyNews").click(function () {
+        let id = $(this).parent().prev().prev().prev().prev().html();
+        let sort = $(this).parent().prev().prev().prev().html();
+        let src = $(this).parent().prev().prev().children().attr("src");
+        let content = $(this).parent().prev().html();
+        
+        if (sort == "公司新闻") {
+          $(".sort").val("1");
+        } else {
+          $(".sort").val("2");
+        }
+        $("#testID").empty().append(id);
+        $("#hasimage").css("display", "block");
+        $("#hasimage").attr("src",src);
+        CKEDITOR.instances.ckeditor.setData(content);
+      });
+      //这个也不需要对接
+      $(".addCompanyNews").click(function(){
+        $("#testID").empty();
+        CKEDITOR.instances.ckeditor.setData("");
+        $("#hasimage").css("display", "none");
+        $("#hasimage").attr("src", "");
+        $(".sort").val("1");
+      });
+      
+      //更新或插入一个ID
+      $(".setCompanyNews").click(function () {
+        let tag = null;
+        if ($(".setTop").is(":checked")) {
+          tag = 1;
+        } else {
+          tag = 0;
+        }
+        $.ajax({
+          type: "post",
+          dataType: "text",
+          url: "",
+          data: {
+            news_id: $("#testID").val(),//新闻自己的得ID  有则更新  没有则插入
+            id: $(".sort").val(),//新闻得种类  1为公司新闻 2为特别关注
+            image: $("#images").val() || $("#hasimage").attr("src"),//匹配数据库地址，如果一直则不更新，不一致则更新
+            content: CKEDITOR.instances.ckeditor.getData(),//直接覆盖 
+          },
+          success: function (data) {
+            alert("数据更新成功")
+          }
+        });
+      });
+      //删除一条新闻
+      $(".deleteCompanyNews").click(function () {
+        let res = comfirm("确定删除这个新闻吗?");
+        if (res == true) {
+          $.ajax({
+            type: "post",
+            dataType: "text",
+            url: "",
+            data: {
+              news_id: $(this).parent().prev().prev().prev().prev().html()
+            },
+            success: function (data) {
+              alert("数据更新成功")
+            }
+          });
+        }
+      })
+      //置顶一条新闻
+      $(".topCompanyNews").click(function () {
+        $.ajax({
+          type: "post",
+          dataType: "text",
+          url: "",
+          data: {
+            news_id: $(this).parent().prev().prev().prev().prev().html()
+          },
+          success: function (data) {
+            alert("数据更新成功")
+          }
+        });
+      })
+    })
+  </script>
+</body>
+
+</html>

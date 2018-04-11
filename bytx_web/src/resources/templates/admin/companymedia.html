@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <script src="./ckeditor/ckeditor.js"></script>
+  <title></title>
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+
+    <div class="container-fluid">
+      <div class="col-md-1"></div>
+      <div class="navbar-header col-md-5">
+        <a class="navbar-brand" href="#" style="width: 50px;padding: 0px">
+          <img alt="Brand" src="./images/logo.png" style="width: 100%;height: 100%;">
+        </a>
+        <p class="navbar-text">test</p>
+      </div>
+      <div class="collapse navbar-collapse col-md-3" id="bs-example-navbar-collapse-1">
+        <p class="navbar-text navbar-right">您好，admin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="#" class="navbar-link">上次登录时间为：2018/06/15</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button>退出</button>
+        </p>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </nav>
+
+  <div class="col-md-1"></div>
+  <div class="col-md-2">
+    <div class="list-group">
+      <a href="./companyadmin.html" class="list-group-item">
+        导航栏
+      </a>
+      <a href="./companybaseinfo.html" class="list-group-item">基本信息</a>
+      <a href="./companyrotation.html" class="list-group-item">轮播图</a>
+      <a href="./companynews.html" class="list-group-item">新闻中心</a>
+      <a href="#" class="list-group-item  active">主营业务</a>
+      <a href="./companyinfo.html" class="list-group-item">概况</a>
+      <a href="./companymusic.html" class="list-group-item">音乐</a>
+      <a href="./companyvideo.html" class="list-group-item">video</a>
+    </div>
+  </div>
+  <div class="well well-lg col-md-8">
+    <table class="table table-condensed" style="height: 50px;line-height:50xp;text-align: center">
+      <tr>
+        <td>id</td>
+        <td>分类</td>
+        <td>内容</td>
+        <td>背景图片</td>
+        <td>操作</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>导航名字1</td>
+        <td>这里是内容随便取几个字符就行1</td>
+        <td>
+          <img src="./images/logo1.png" alt="" style="width: 50px;">
+        </td>
+        <td>
+          <span class="glyphicon glyphicon-pencil mUpdate" aria-hidden="true" data-toggle="modal" data-target="#myModal"></span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="checkbox" class="topTest">
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>导航名字2</td>
+        <td>这里是内容随便取几个字符就行2</td>
+        <td>
+          <img src="./images/logo2.png" alt="" style="width: 50px;">
+        </td>
+        <td>
+          <span class="glyphicon glyphicon-pencil mUpdate" aria-hidden="true" data-toggle="modal" data-target="#myModal"></span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="checkbox" checked="checked" class="topTest">
+        </td>
+      </tr>
+    </table>
+    <div style="text-align: center">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">1</a>
+          </li>
+          <li>
+            <a href="#">2</a>
+          </li>
+          <li>
+            <a href="#">3</a>
+          </li>
+          <li>
+            <a href="#">4</a>
+          </li>
+          <li>
+            <a href="#">5</a>
+          </li>
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- 这个div不需要对接 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="des">所属分类</label>
+                <input type="text" class="form-control" id="des" placeholder="分类">
+              </div>
+              <div class="form-group">
+                <label for="images">图片</label>
+                <input type="file" id="images">
+                <img src="" id="hasimage" style="width: 50px;">
+              </div>
+              <div class="form-group">
+                <label for="editor">内容</label>
+                <textarea name="ckeditor" class="form-control" id="ckeditor" cols="30" rows="10"></textarea>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" class="setTop"> 是否将背景图片显示在主页
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary save">更新</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    CKEDITOR.replace('ckeditor');
+    //更新一个三级导航
+    $(".save").click(function () {
+      let tag = null;
+      if ($(".setTop").is(":checked")) {
+        tag = 1;
+      } else {
+        tag = 0;
+      }
+      $.ajax({
+        type: "post",
+        dataType: "text",
+        url: "",
+        data: {
+          id: $("#myModalLabel").html(),// 类名ID
+          content: CKEDITOR.instances.ckeditor.getData(),//富文本内容
+          name: $("#des").val(),//类名（可以更改三级导航名，你直接把数据库涉及到这个名字的字段覆盖就行）
+          image: $(".images").val() || $(".hasimage").attr("src"),//图片地址，你检测这个字段是否和数据库匹配，不匹配就代表用户重新上传了，你需要把原来的删掉，匹配就不用操作了
+          tag: tag  //0为不显示在主页，1为显示在主页
+        },
+        success: function (data) {
+          alert("数据更新成功")
+        }
+      });
+    });
+    //设置一个三级导航得背景图是否在首页
+    $(".topTest").click(function () {
+      let tag = null;
+      if ($(this).is(":checked")) {
+        tag = 1;
+      } else {
+        tag = 0;
+      }
+      $.ajax({
+        type: "post",
+        dataType: "text",
+        url: "",
+        data: {
+          id: $("#myModalLabel").html(),// 类名ID
+          tag: tag //0为不显示在主页，1为显示在主页
+        },
+        success: function (data) {
+          alert("数据更新成功")
+        }
+      });
+    })
+    //底下得不需要对接，一些dom操作
+    $(function () {
+      $(".mUpdate").click(function () {
+        let id = $(this).parent().prev().prev().prev().prev().text();
+        let name = $(this).parent().prev().prev().prev().text();
+        let content = $(this).parent().prev().prev().html();
+        let image = $(this).parent().prev().children().attr("src");
+        $("#myModalLabel").empty().append(id);
+        $("#des").val(name);
+        $("#hasimage").attr("src", image);
+        CKEDITOR.instances.ckeditor.setData(content);
+        if ($(this).next().attr('checked')) {
+          $(".setTop").attr("checked", 'true')
+        } else {
+          $(".setTop").attr("checked", false)
+        }
+      });
+
+    })
+  </script>
+
+</body>
+
+</html>
