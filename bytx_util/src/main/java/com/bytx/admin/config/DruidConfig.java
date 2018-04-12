@@ -98,7 +98,7 @@ public class DruidConfig
         ServletRegistrationBean reg = new ServletRegistrationBean();
         reg.setServlet(new StatViewServlet());
         reg.addUrlMappings("/druid/*");
-        reg.addInitParameter("allow", "111.200.53.34"); //白名单
+        reg.addInitParameter("allow", "111.200.53.34"); //白名单i
         reg.addInitParameter("loginUsername", "admin");//查看监控的用户名
         reg.addInitParameter("loginPassword", "nimda");//密码
         return reg;

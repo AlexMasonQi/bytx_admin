@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bytx_dao" />
+        <module name="bytx_domain" />
+        <module name="bytx_service" />
+        <module name="bytx_util" />
+        <module name="bytx_web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bytx_admin" target="10" />
+      <module name="bytx_dao" target="10" />
+      <module name="bytx_domain" target="10" />
+      <module name="bytx_service" target="10" />
+      <module name="bytx_util" target="10" />
+      <module name="bytx_web" target="10" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
