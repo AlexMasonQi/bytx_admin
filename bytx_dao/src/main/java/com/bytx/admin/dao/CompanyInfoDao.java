@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface CompanyInfoDao
 {
     CompanyInfo selectCompanyInfoById(Integer id);
+
+    int updateCompanyInfo(CompanyInfo companyInfo);
 }

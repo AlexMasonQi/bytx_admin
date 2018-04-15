@@ -16,4 +16,19 @@
         from company_info
         where id = #{id}
     </select>
+
+    <update id="updateCompanyInfo">
+        update company_info
+        <set>
+            <if test="id!=null">
+                id=#{id}
+            </if>
+            <if test="content!=null">
+                content=#{content}
+            </if>
+        </set>
+        <where>
+            id=#{id} and parent_id=1;
+        </where>
+    </update>
 </mapper>

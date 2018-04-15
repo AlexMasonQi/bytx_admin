@@ -4,6 +4,7 @@
 <mapper namespace="com.bytx.admin.dao.BasicInfoDao">
     <resultMap id="basicInfoMap" type="com.bytx.admin.entity.BasicInfo">
         <id column="id" property="id"/>
+        <result column="basic_name" property="basicName"/>
         <result column="basic_logo" property="basicLogo"/>
         <result column="basic_qrcode" property="basicQrcode"/>
         <result column="basic_address" property="basicAddress"/>
@@ -11,21 +12,66 @@
         <result column="basic_email" property="basicEmail"/>
         <result column="basic_record" property="basicRecord"/>
         <result column="status" property="status"/>
+        <result column="support" property="support"/>
+        <result column="descript" property="descript"/>
     </resultMap>
 
     <!--查询启用状态的公司信息-->
     <select id="selectBasicInfoByStatus" resultMap="basicInfoMap">
         select
             id,
+            basic_name,
             basic_logo,
             basic_qrcode,
             basic_address,
             basic_phone,
             basic_email,
             basic_record,
-            status
+            status,
+            support,
+            descript
         from basic_info
         where
             status = 1
     </select>
+
+    <!--更新公司基本信息-->
+    <update id="updateCompanyBaseInfo">
+        update basic_info
+        <set>
+            <if test="basicName!=null">
+                basic_name=#{basicName},
+            </if>
+            <if test="basicLogo!=null">
+                basic_logo=#{basicLogo}
+            </if>
+            <if test="basicQrcode!=null">
+                basic_qrcode=#{basicQrcode}
+            </if>
+            <if test="basicAddress!=null">
+                basic_address=#{basicAddress}
+            </if>
+            <if test="basicPhone!=null">
+                basic_phone=#{basicPhone}
+            </if>
+            <if test="basicEmail!=null">
+                basic_email=#{basicEmail}
+            </if>
+            <if test="basicRecord!=null">
+                basic_record=#{basicRecord}
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+            <if test="support!=null">
+                support=#{support}
+            </if>
+            <if test="descript!=null">
+                descript=#{descript}
+            </if>
+        </set>
+        <where>
+            id=#{id} and status=1
+        </where>
+    </update>
 </mapper>

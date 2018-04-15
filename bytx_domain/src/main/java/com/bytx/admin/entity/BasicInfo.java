@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class BasicInfo implements Serializable
 {
     private Integer id;
+    private String basicName;
     private String basicLogo;
     private String basicQrcode;
     private String basicAddress;
@@ -12,6 +13,8 @@ public class BasicInfo implements Serializable
     private String basicEmail;
     private String basicRecord;
     private Integer status;
+    private String support;
+    private String descript;
 
     public Integer getId()
     {
@@ -21,6 +24,16 @@ public class BasicInfo implements Serializable
     public void setId(Integer id)
     {
         this.id = id;
+    }
+
+    public String getBasicName()
+    {
+        return basicName;
+    }
+
+    public void setBasicName(String basicName)
+    {
+        this.basicName = basicName;
     }
 
     public String getBasicLogo()
@@ -93,9 +106,29 @@ public class BasicInfo implements Serializable
         this.status = status;
     }
 
+    public String getSupport()
+    {
+        return support;
+    }
+
+    public void setSupport(String support)
+    {
+        this.support = support;
+    }
+
+    public String getDescript()
+    {
+        return descript;
+    }
+
+    public void setDescript(String descript)
+    {
+        this.descript = descript;
+    }
+
     @Override
     public String toString()
     {
-        return "BasicInfo{" + "id=" + id + ", basicLogo='" + basicLogo + '\'' + ", basicQrcode='" + basicQrcode + '\'' + ", basicAddress='" + basicAddress + '\'' + ", basicPhone='" + basicPhone + '\'' + ", basicEmail='" + basicEmail + '\'' + ", basicRecord='" + basicRecord + '\'' + ", status=" + status + '}';
+        return "BasicInfo{" + "id=" + id + ", basicName='" + basicName + '\'' + ", basicLogo='" + basicLogo + '\'' + ", basicQrcode='" + basicQrcode + '\'' + ", basicAddress='" + basicAddress + '\'' + ", basicPhone='" + basicPhone + '\'' + ", basicEmail='" + basicEmail + '\'' + ", basicRecord='" + basicRecord + '\'' + ", status=" + status + ", support='" + support + '\'' + ", descript='" + descript + '\'' + '}';
     }
 }

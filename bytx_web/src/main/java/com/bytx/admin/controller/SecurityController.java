@@ -2,6 +2,7 @@ package com.bytx.admin.controller;
 
 import com.bytx.admin.entity.User;
 import com.bytx.admin.service.UserQueryService;
+import com.bytx.admin.util.DateTimeUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.Objects;
 
 @Controller
@@ -35,6 +37,9 @@ public class SecurityController
     {
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("username", userName);
+        Date lastAccessDate=SecurityUtils.getSubject().getSession().getLastAccessTime();
+        String lastLoginTime=DateTimeUtil.dateToString(lastAccessDate);
+        model.addAttribute("currentTime",lastLoginTime);
         return "admin/companyadmin";
     }
 

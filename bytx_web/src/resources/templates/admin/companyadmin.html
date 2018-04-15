@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -9,42 +10,36 @@
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <title></title>
+
+    <script th:inlin="javascript">
+        /*<![CDATA[*/
+        var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
+        $(function()
+        {
+            $("#logout").click(function()
+            {
+                window.location.href=contextPath+"/logout";
+            });
+        });
+
+        /*]]>*/
+    </script>
 </head>
 
 <body>
-<nav class="navbar navbar-default">
-
-    <div class="container-fluid">
-        <div class="col-md-1"></div>
-        <div class="navbar-header col-md-5">
-            <a class="navbar-brand" href="#" style="width: 50px;padding: 0px">
-                <img alt="Brand" th:src="@{/images/logo1.png}" style="width: 100%;height: 100%;">
-            </a>
-            <p class="navbar-text">test</p>
-        </div>
-        <div class="collapse navbar-collapse col-md-3" id="bs-example-navbar-collapse-1">
-            <p class="navbar-text navbar-right">您好，admin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="#" class="navbar-link">上次登录时间为：2018/06/15</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button>退出</button>
-            </p>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
-</nav>
+<nav th:replace="common/head"></nav>
 
 <div class="col-md-1"></div>
 <div class="col-md-2">
     <div class="list-group">
-        <a href="#" class="list-group-item active">
-            导航栏
-        </a>
-        <a href="./companybaseinfo.html" class="list-group-item">基本信息</a>
-        <a href="./companyrotation.html" class="list-group-item">轮播图</a>
-        <a href="./companynews.html" class="list-group-item">新闻中心</a>
-        <a href="./companymedia.html" class="list-group-item">主营业务</a>
-        <a href="./companyinfo.html" class="list-group-item">概况</a>
-        <a href="./companymusic.html" class="list-group-item">音乐</a>
-        <a href="./companyvideo.html" class="list-group-item">video</a>
+        <a th:href="@{/companyadmin}" class="list-group-item active">导航栏</a>
+        <a th:href="@{/menu/companyBaseInfo}" class="list-group-item">基本信息</a>
+        <a th:href="@{/menu/companyRotation}" class="list-group-item">轮播图</a>
+        <a th:href="@{/menu/companyNews}" class="list-group-item">新闻中心</a>
+        <a th:href="@{/menu/companyMedia}" class="list-group-item">主营业务</a>
+        <a th:href="@{/menu/companyInfo}" class="list-group-item">概况</a>
+        <a th:href="@{/menu/companyMusic}" class="list-group-item">音乐</a>
+        <a th:href="@{/menu/companyVideo}" class="list-group-item">video</a>
     </div>
 </div>
 <div class="well well-lg col-md-8">

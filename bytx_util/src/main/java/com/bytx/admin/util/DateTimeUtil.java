@@ -939,4 +939,9 @@ public class DateTimeUtil
         return sdf2.format(parse);
     }
 
+    public static String dateToString(Date date)
+    {
+        return DateFormatUtils.format(date,"yyyy-MM-dd HH:mm:ss");
+    }
+
 }
