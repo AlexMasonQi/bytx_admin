@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en"
->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <html>
 
-<h1>Spring Boot file upload example</h1>
-<form method="POST" action="/upload" enctype="multipart/form-data">
-    <input type="file" name="file"/><br/><br/>
-    <input type="submit" value="Submit"/>
-</form>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
+    // $(function () {
+    //     $("#btnSubmit").click(function () {
+    //         var formData = new FormData($("#form-add"));
+    //         console.log(formData);
+    //         $.ajax({
+    //             type: "post",
+    //             dataType: "text",
+    //             url: contextPath + "/test/upload",
+    //             data: formData,
+    //             async: false,
+    //             cache: false,
+    //             contentType: false,
+    //             processData: false,
+    //             success: function (data) {
+    //                 if (data == 1) {
+    //                     alert("上传成功");
+    //                 }
+    //                 else {
+    //                     alert("上传失败");
+    //                 }
+    //             },
+    //         });
+    //     });
+    // });
+
+    /*]]>*/
+</script>
+
+<div class="container">
+    <h1>Spring Boot file upload example</h1>
+    <form id="form-add" enctype="multipart/form-data" method="post" th:action="@{/test/upload}">
+        <input type="file" name="upload_file"/><br/><br/>
+        <input type="submit" value="提交">
+    </form>
+    <!--<button class="btn-primary" id="btnSubmit" type="submit">提交</button>-->
+</div>

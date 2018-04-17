@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <title></title>
 
-    <script th:inlin="javascript">
+    <script th:inline="javascript">
         /*<![CDATA[*/
         var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
         $(function()
@@ -47,6 +47,7 @@
         <h1>Hello, admin</h1>
         <p>当前系统已用空间000,还能使用空间0000</p>
         <p>这个我还没想好</p>
+        <a th:href="@{/menu/testFile}">上传测试</a>
     </div>
 </div>
 

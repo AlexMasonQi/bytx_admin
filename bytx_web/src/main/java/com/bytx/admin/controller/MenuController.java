@@ -51,4 +51,10 @@ public class MenuController extends BaseController
     {
         return "admin/companyvideo";
     }
+
+    @RequestMapping("/testFile")
+    public String showTestUploadPage()
+    {
+        return "testUpload";
+    }
 }
