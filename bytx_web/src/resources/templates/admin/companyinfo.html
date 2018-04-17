@@ -3,138 +3,116 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script th:src="@{/js/jquery.min.js}"></script>
-  <script th:src="@{/js/bootstrap.min.js}"></script>
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <script th:src="@{/ckeditor/ckeditor.js}"></script>
-  <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/ckeditor/ckeditor.js}"></script>
+    <title></title>
 </head>
 
 <body>
 <nav th:replace="common/head"></nav>
 
-  <div class="col-md-1"></div>
-  <div class="col-md-2">
+<div class="col-md-1"></div>
+<div class="col-md-2">
     <div class="list-group">
-      <a th:href="@{/companyadmin}" class="list-group-item">导航栏</a>
-      <a th:href="@{/menu/companyBaseInfo}" class="list-group-item">基本信息</a>
-      <a th:href="@{/menu/companyRotation}" class="list-group-item">轮播图</a>
-      <a th:href="@{/menu/companyNews}" class="list-group-item">新闻中心</a>
-      <a th:href="@{/menu/companyMedia}" class="list-group-item">主营业务</a>
-      <a th:href="@{/menu/companyInfo}" class="list-group-item active">概况</a>
-      <a th:href="@{/menu/companyMusic}" class="list-group-item">音乐</a>
-      <a th:href="@{/menu/companyVideo}" class="list-group-item">video</a>
+        <a th:href="@{/companyadmin}" class="list-group-item">导航栏</a>
+        <a th:href="@{/menu/companyBaseInfo}" class="list-group-item">基本信息</a>
+        <a th:href="@{/menu/companyRotation}" class="list-group-item">轮播图</a>
+        <a th:href="@{/menu/companyNews}" class="list-group-item">新闻中心</a>
+        <a th:href="@{/menu/companyMedia}" class="list-group-item">主营业务</a>
+        <a th:href="@{/menu/companyInfo}" class="list-group-item active">概况</a>
+        <a th:href="@{/menu/companyMusic}" class="list-group-item">音乐</a>
+        <a th:href="@{/menu/companyVideo}" class="list-group-item">video</a>
     </div>
-  </div>
-  <div class="well well-lg col-md-8">
+</div>
+<div class="well well-lg col-md-8">
     <table class="table table-condensed" style="height: 50px;line-height:50px;text-align: center">
-      <tr>
-        <td>id</td>
-        <td>分类</td>
-        <td>内容</td>
-        <td>操作</td>
-      </tr>
-      <tr>
-        <!-- 所属分类的ID -->
-        <td>1</td>
-        <td>公司概况</td>
-        <td>全部取出来  我做字符串限定了</td>
-        <td>
-          <a href="" data-toggle="modal" data-target="#myModal" class="companyinfo">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-          </a>
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>组织机构</td>
-        <td>全部取出来  我做字符串限定了</td>
-        <td>
-          <a href="" data-toggle="modal" data-target="#myModal" class="companyinfo">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-          </a>
-        </td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>领导致辞</td>
-        <td>全部取出来  我做字符串限定了</td>
-        <td>
-          <a href="" data-toggle="modal" data-target="#myModal" class="companyinfo">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-          </a>
-        </td>
-      </tr>
+        <tr>
+            <td>id</td>
+            <td>分类</td>
+            <td>内容</td>
+            <td>操作</td>
+        </tr>
+        <tr th:each="info:${companyInfoList}">
+            <!-- 所属分类的ID -->
+            <td th:text="${info.id}"></td>
+            <td th:text="${info.menuName}"></td>
+            <td th:text="${info.content}"></td>
+            <td>
+                <a href="" data-toggle="modal" data-target="#myModal" class="companyinfo">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </a>
+            </td>
+        </tr>
     </table>
 
 
-
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title" id="myModalLabel">公司概况</h4>
-            <span id="sm"></span>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="ckeditor">内容</label>
-                <textarea name="ckeditor" class="form-control" id="ckeditor" cols="30" rows="10"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary save">更新</button>
-          </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">公司概况</h4>
+                    <span id="sm"></span>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="ckeditor">内容</label>
+                            <textarea name="ckeditor" class="form-control" id="ckeditor" cols="30" rows="10"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary save">更新</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script th:inline="javascript">
-      /*<![CDATA[*/
-      var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
 
     CKEDITOR.replace('ckeditor');
     $(function () {
-      //这个不用对接
-      $(".companyinfo").click(function () {
-        var content = $(this).parent().prev().html();
-        var name = $(this).parent().prev().prev().html();
-        var id = $(this).parent().prev().prev().prev().html();
-        CKEDITOR.instances.ckeditor.setData(content);
-        $("#myModalLabel").empty().append(name);
-        $("#sm").empty().append(id);
-      });
-      //更新
-      $(".save").click(function(){
-        $.ajax({
-          type: "post",
-          dataType: "text",
-          url: contextPath+"",
-          data: {
-            "id": $("#sm").html(),//这个是所属分类的ID
-            "content": CKEDITOR.instances.ckeditor.getData()
-          },
-          success: function (data) {
-              if(data==1)
-              {
-                  alert("数据更新成功");
-              }
-          }
+        //这个不用对接
+        $(".companyinfo").click(function () {
+            var content = $(this).parent().prev().html();
+            var name = $(this).parent().prev().prev().html();
+            var id = $(this).parent().prev().prev().prev().html();
+            CKEDITOR.instances.ckeditor.setData(content);
+            $("#myModalLabel").empty().append(name);
+            $("#sm").empty().append(id);
         });
-      });
+        //更新
+        $(".save").click(function () {
+            $.ajax({
+                       type: "post",
+                       dataType: "text",
+                       url: contextPath + "",
+                       data: {
+                           "id": $("#sm").html(),//这个是所属分类的ID
+                           "content": CKEDITOR.instances.ckeditor.getData()
+                       },
+                       success: function (data) {
+                           if (data == 1) {
+                               alert("数据更新成功");
+                           }
+                       }
+                   });
+        });
     });
 
-      /*]]>*/
-  </script>
+    /*]]>*/
+</script>
 </body>
 
 </html>

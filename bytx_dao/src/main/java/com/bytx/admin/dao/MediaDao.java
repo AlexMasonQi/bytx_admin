@@ -10,4 +10,6 @@ import java.util.List;
 public interface MediaDao
 {
     List<Media> selectMediasByParentId(@Param("parentId") Integer parentId);
+
+    List<Media> selectAllMedia();
 }

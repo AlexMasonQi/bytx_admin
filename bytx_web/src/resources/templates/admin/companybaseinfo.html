@@ -3,102 +3,101 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script th:src="@{/js/jquery.min.js}"></script>
-  <script th:src="@{/js/bootstrap.min.js}"></script>
-  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-  <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <title></title>
 
-  <script th:inline="javascript">
-      /*<![CDATA[*/
-      var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
 
-      $(function () {
-          $(".save").click(function () {
-              $.ajax({
-                  type: "post",
-                  dataType: "text",
-                  url: contextPath+"/info/updateBasicInfo",
-                  data: {
-                      "basicName": $("#name").val(),//公司名称
-                      "basicAddress": $("#address").val(),//地址
-                      "basicEmail": $("#email").val(),//邮箱
-                      "basicPhone": $("#phone").val(),//电话
-                      "support": $("#support").val(),//技术支持
-                      "basicLogo": $("#logo").val(),//logo
-                      "basicQrcode": $("#code").val(),//二维码
-                      "descript": $("#descript").val()//关键词
-                  },
-                  success: function (data) {
-                      if(status==1)
-                      {
-                          alert("更新基本信息成功!");
-                      }
-                  }
-              });
-          });
-      });
+        $(function () {
+            $(".save").click(function () {
+                $.ajax({
+                           type: "post",
+                           dataType: "text",
+                           url: contextPath + "/info/updateBasicInfo",
+                           data: {
+                               "basicName": $("#name").val(),//公司名称
+                               "basicAddress": $("#address").val(),//地址
+                               "basicEmail": $("#email").val(),//邮箱
+                               "basicPhone": $("#phone").val(),//电话
+                               "support": $("#support").val(),//技术支持
+                               "basicLogo": $("#logo").val(),//logo
+                               "basicQrcode": $("#code").val(),//二维码
+                               "descript": $("#descript").val()//关键词
+                           },
+                           success: function (data) {
+                               if (status == 1) {
+                                   alert("更新基本信息成功!");
+                               }
+                           }
+                       });
+            });
+        });
 
-      /*]]>*/
-  </script>
+        /*]]>*/
+    </script>
 
 </head>
 
 <body>
-  <nav th:replace="common/head"></nav>
+<nav th:replace="common/head"></nav>
 
-  <div class="col-md-1"></div>
-  <div class="col-md-2">
+<div class="col-md-1"></div>
+<div class="col-md-2">
     <div class="list-group">
-      <a th:href="@{/companyadmin}" class="list-group-item">导航栏</a>
-      <a th:href="@{/menu/companyBaseInfo}" class="list-group-item active">基本信息</a>
-      <a th:href="@{/menu/companyRotation}" class="list-group-item">轮播图</a>
-      <a th:href="@{/menu/companyNews}" class="list-group-item">新闻中心</a>
-      <a th:href="@{/menu/companyMedia}" class="list-group-item">主营业务</a>
-      <a th:href="@{/menu/companyInfo}" class="list-group-item">概况</a>
-      <a th:href="@{/menu/companyMusic}" class="list-group-item">音乐</a>
-      <a th:href="@{/menu/companyVideo}" class="list-group-item">video</a>
+        <a th:href="@{/companyadmin}" class="list-group-item">导航栏</a>
+        <a th:href="@{/menu/companyBaseInfo}" class="list-group-item active">基本信息</a>
+        <a th:href="@{/menu/companyRotation}" class="list-group-item">轮播图</a>
+        <a th:href="@{/menu/companyNews}" class="list-group-item">新闻中心</a>
+        <a th:href="@{/menu/companyMedia}" class="list-group-item">主营业务</a>
+        <a th:href="@{/menu/companyInfo}" class="list-group-item">概况</a>
+        <a th:href="@{/menu/companyMusic}" class="list-group-item">音乐</a>
+        <a th:href="@{/menu/companyVideo}" class="list-group-item">video</a>
     </div>
-  </div>
-  <div class="well well-lg col-md-8">
+</div>
+<div class="well well-lg col-md-8">
     <form>
-      <div class="form-group">
-        <label for="name">公司名称</label>
-        <input type="text" class="form-control" id="name" placeholder="名称">
-      </div>
-      <div class="form-group">
-        <label for="address">公司地址</label>
-        <input type="text" class="form-control" id="address" placeholder="地址">
-      </div>
-      <div class="form-group">
-        <label for="email">公司邮箱</label>
-        <input type="text" class="form-control" id="email" placeholder="邮箱">
-      </div>
-      <div class="form-group">
-        <label for="phone">公司电话</label>
-        <input type="text" class="form-control" id="phone" placeholder="电话">
-      </div>
-      <div class="form-group">
-        <label for="phone">技术支持</label>
-        <input type="text" class="form-control" id="support" placeholder="支持">
-      </div>
-      <div class="form-group">
-        <label for="logo">选择LOGO</label>
-        <input type="file" id="logo">
-      </div>
-      <div class="form-group">
-        <label for="code">二维码</label>
-        <input type="file" id="code">
-      </div>
-      <div class="form-group">
-        <label for="descript">网站关键词</label>
-        <textarea cols="30" rows="10" id="descript"></textarea>
-      </div>
-      <button class="btn btn-default save">保存</button>
+        <div class="form-group">
+            <label for="name">公司名称</label>
+            <input type="text" class="form-control" th:value="${basicInfo.basicName}" id="name" placeholder="名称">
+        </div>
+        <div class="form-group">
+            <label for="address">公司地址</label>
+            <input type="text" class="form-control" th:value="${basicInfo.basicAddress}" id="address" placeholder="地址">
+        </div>
+        <div class="form-group">
+            <label for="email">公司邮箱</label>
+            <input type="text" class="form-control" th:value="${basicInfo.basicEmail}" id="email" placeholder="邮箱">
+        </div>
+        <div class="form-group">
+            <label for="phone">公司电话</label>
+            <input type="text" class="form-control" th:value="${basicInfo.basicPhone}" id="phone" placeholder="电话">
+        </div>
+        <div class="form-group">
+            <label for="phone">技术支持</label>
+            <input type="text" class="form-control" th:value="${basicInfo.support}" id="support" placeholder="支持">
+        </div>
+        <div class="form-group">
+            <label for="logo">选择LOGO</label>
+            <input type="file" id="logo">
+        </div>
+        <div class="form-group">
+            <label for="code">二维码</label>
+            <input type="file" id="code">
+        </div>
+        <div class="form-group">
+            <label for="descript">网站关键词</label>
+            <textarea cols="30" rows="10" th:text="${bsaicInfo.descript}" id="descript"></textarea>
+        </div>
+        <button class="btn btn-default save">保存</button>
     </form>
-  </div>
+</div>
 </body>
 
 </html>

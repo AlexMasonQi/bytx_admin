@@ -26,4 +26,16 @@
         where parent_id = #{parentId}
     </select>
 
+    <select id="selectAllMedia" resultMap="mediaMap">
+        select
+            id,
+            parent_id,
+            media_id,
+            name,
+            content,
+            images,
+            tag
+        from company_media
+    </select>
+
 </mapper>

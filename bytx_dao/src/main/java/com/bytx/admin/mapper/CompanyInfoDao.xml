@@ -4,13 +4,24 @@
 <mapper namespace="com.bytx.admin.dao.CompanyInfoDao">
     <resultMap id="companyInfoMap" type="com.bytx.admin.entity.CompanyInfo">
         <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="menu_name" property="menuName"/>
         <result column="content" property="content"/>
         <result column="parent_id" property="parentId"/>
     </resultMap>
 
+    <select id="selectAllCompanyInfo" resultMap="companyInfoMap">
+        select
+            id,
+            menu_name,
+            content,
+            parent_id
+        from company_info
+    </select>
+
     <select id="selectCompanyInfoById" resultMap="companyInfoMap">
         select
             id,
+            menu_name,
             parent_id,
             content
         from company_info

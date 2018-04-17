@@ -5,6 +5,8 @@ import com.bytx.admin.entity.CompanyInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CompanyInfoQueryService
 {
@@ -14,5 +16,10 @@ public class CompanyInfoQueryService
     public CompanyInfo selectCompanyInfoById(Integer id)
     {
         return companyInfoDao.selectCompanyInfoById(id);
+    }
+
+    public List<CompanyInfo> selectAllCompanyInfo()
+    {
+        return companyInfoDao.selectAllCompanyInfo();
     }
 }

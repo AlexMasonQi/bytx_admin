@@ -17,4 +17,9 @@ public class MediaQueryService
     {
         return mediaDao.selectMediasByParentId(parentId);
     }
+
+    public List<Media> selectAllMedia()
+    {
+        return mediaDao.selectAllMedia();
+    }
 }
