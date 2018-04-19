@@ -1,49 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Shiro Demo</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.form.min.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
 
-<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
 
-<script th:inline="javascript">
-    /*<![CDATA[*/
+        var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
 
-    var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
-    // $(function () {
-    //     $("#btnSubmit").click(function () {
-    //         var formData = new FormData($("#form-add"));
-    //         console.log(formData);
-    //         $.ajax({
-    //             type: "post",
-    //             dataType: "text",
-    //             url: contextPath + "/test/upload",
-    //             data: formData,
-    //             async: false,
-    //             cache: false,
-    //             contentType: false,
-    //             processData: false,
-    //             success: function (data) {
-    //                 if (data == 1) {
-    //                     alert("上传成功");
-    //                 }
-    //                 else {
-    //                     alert("上传失败");
-    //                 }
-    //             },
-    //         });
-    //     });
-    // });
+        function uploadData() {
+            var option = {
+                type: "post",
+                url: contextPath + "/test/upload",
+                success: function (data) {
+                    if (data == 1) {
+                        alert("上传成功");
+                    }
+                    else {
+                        alert("上传失败");
+                    }
+                },
+                error: function () {
+                    alert("出现了一些微小的错误");
+                }
+            };
+            $("#uploadForm").ajaxSubmit(option);
+        }
 
-    /*]]>*/
-</script>
+        /*]]>*/
+    </script>
 
-<div class="container">
-    <h1>Spring Boot file upload example</h1>
-    <form id="form-add" enctype="multipart/form-data" method="post" th:action="@{/test/upload}">
-        <input type="file" name="upload_file"/><br/><br/>
-        <input type="submit" value="提交">
+</head>
+<body>
+
+<div class="container" style="margin-top:60px;">
+    <form id="uploadForm" enctype="multipart/form-data">
+        <fieldset>
+            <div class="form-group">
+                <label for="inputFile">File upload example</label>
+                <input type="file" class="form-control-file" id="inputFile" name="testFile" aria-describedby="fileHelp">
+                <small id="fileHelp" class="form-text text-muted">Please choose a file</small>
+            </div>
+            <button type="button" id="btnSubmit" class="btn btn-primary" onclick="uploadData()">提交</button>
+        </fieldset>
     </form>
-    <!--<button class="btn-primary" id="btnSubmit" type="submit">提交</button>-->
 </div>
+
+</body>
+</html>
