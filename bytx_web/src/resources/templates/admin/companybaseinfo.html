@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.form.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <title></title>
@@ -17,26 +18,31 @@
 
         $(function () {
             $(".save").click(function () {
-                $.ajax({
-                           type: "post",
-                           dataType: "text",
-                           url: contextPath + "/info/updateBasicInfo",
-                           data: {
-                               "basicName": $("#name").val(),//公司名称
-                               "basicAddress": $("#address").val(),//地址
-                               "basicEmail": $("#email").val(),//邮箱
-                               "basicPhone": $("#phone").val(),//电话
-                               "support": $("#support").val(),//技术支持
-                               "basicLogo": $("#logo").val(),//logo
-                               "basicQrcode": $("#code").val(),//二维码
-                               "descript": $("#descript").val()//关键词
-                           },
-                           success: function (data) {
-                               if (status == 1) {
-                                   alert("更新基本信息成功!");
-                               }
-                           }
-                       });
+                var option = {
+                    type: "post",
+                    url: contextPath + "/info/updateBasicInfo",
+                    data: {
+                        "basicName": $("#name").val(),//公司名称
+                        "basicAddress": $("#address").val(),//地址
+                        "basicEmail": $("#email").val(),//邮箱
+                        "basicPhone": $("#phone").val(),//电话
+                        "support": $("#support").val(),//技术支持
+                        "descript": $("#descript").val()//关键词
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            alert("更新基本信息成功!");
+                        }
+                        else {
+                            alert("更新失败");
+                        }
+                    },
+                    error: function () {
+                        alert("抱歉，服务器出现了一些微小的问题");
+                    }
+                };
+
+                $("#baseInfoUpdateForm").ajaxSubmit(option);
             });
         });
 
@@ -62,7 +68,7 @@
     </div>
 </div>
 <div class="well well-lg col-md-8">
-    <form>
+    <form id="baseInfoUpdateForm" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">公司名称</label>
             <input type="text" class="form-control" th:value="${basicInfo.basicName}" id="name" placeholder="名称">
@@ -85,15 +91,15 @@
         </div>
         <div class="form-group">
             <label for="logo">选择LOGO</label>
-            <input type="file" id="logo">
+            <input type="file" name="logo" id="logo">
         </div>
         <div class="form-group">
             <label for="code">二维码</label>
-            <input type="file" id="code">
+            <input type="file" name="code" id="code">
         </div>
         <div class="form-group">
             <label for="descript">网站关键词</label>
-            <textarea cols="30" rows="10" th:text="${bsaicInfo.descript}" id="descript"></textarea>
+            <textarea cols="30" rows="10" th:text="${basicInfo.descript}" id="descript"></textarea>
         </div>
         <button class="btn btn-default save">保存</button>
     </form>

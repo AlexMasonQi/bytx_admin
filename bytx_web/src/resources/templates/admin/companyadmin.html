@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns="http://www.w3.org/1999/xhtml"
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -14,11 +14,9 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
-        $(function()
-        {
-            $("#logout").click(function()
-            {
-                window.location.href=contextPath+"/logout";
+        $(function () {
+            $("#logout").click(function () {
+                window.location.href = contextPath + "/logout";
             });
         });
 
@@ -45,8 +43,9 @@
 <div class="well well-lg col-md-8">
     <div class="jumbotron">
         <h1>Hello, admin</h1>
-        <p>当前系统已用空间000,还能使用空间0000</p>
-        <p>这个我还没想好</p>
+        <!--<p th:each="info:${systemInfoList}">-->
+        <!--<a href="#" class="list-group-item" th:text="${info}"></a>-->
+        <!--</p>-->
         <a th:href="@{/menu/testFile}">上传测试</a>
     </div>
 </div>

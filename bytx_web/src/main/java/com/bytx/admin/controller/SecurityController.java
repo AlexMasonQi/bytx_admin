@@ -37,9 +37,13 @@ public class SecurityController
     {
         String userName = (String) SecurityUtils.getSubject().getPrincipal();
         model.addAttribute("username", userName);
-        Date lastAccessDate=SecurityUtils.getSubject().getSession().getLastAccessTime();
-        String lastLoginTime=DateTimeUtil.dateToString(lastAccessDate);
-        model.addAttribute("currentTime",lastLoginTime);
+        Date lastAccessDate = SecurityUtils.getSubject().getSession().getLastAccessTime();
+        String lastLoginTime = DateTimeUtil.dateToString(lastAccessDate);
+        model.addAttribute("currentTime", lastLoginTime);
+
+//        List<String> systemInfoList = SystemInfoUtil.getSystemRomInfo();
+//        model.addAttribute("systemInfoList", systemInfoList);
+
         return "admin/companyadmin";
     }
 

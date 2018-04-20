@@ -1,6 +1,8 @@
 package com.bytx.admin.controller;
 
-import org.springframework.security.access.method.P;
+import com.bytx.admin.entity.BasicInfo;
+import com.bytx.admin.service.BasicInfoQueryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,9 +12,16 @@ import java.util.Map;
 @RequestMapping("/menu")
 public class MenuController extends BaseController
 {
+    @Autowired
+    private BasicInfoQueryService basicInfoQueryService;
+
     @RequestMapping("/companyBaseInfo")
     public String showCompanyBaseInfo(Map model)
     {
+        BasicInfo basicInfo = basicInfoQueryService.selectBasicInfoByStatus();
+
+        model.put("basicInfo", basicInfo);
+        
         return "admin/companybaseinfo";
     }
 

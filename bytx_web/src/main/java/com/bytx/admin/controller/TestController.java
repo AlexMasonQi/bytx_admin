@@ -1,16 +1,14 @@
 package com.bytx.admin.controller;
 
-import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
 
 @Controller
@@ -21,26 +19,17 @@ public class TestController extends BaseController
 
     @RequestMapping("/upload")
     @ResponseBody
-    public Integer uploadFile(@RequestParam("testFile") MultipartFile file, HttpServletRequest request) throws IOException
+    public Integer uploadFile(HttpServletRequest request) throws IOException
     {
-        if (file.isEmpty())
-        {
-            logger.warn("文件为空");
-            return -1;
-        }
+        System.out.println(request.getServletContext().getRealPath("/"));
+        MultipartFile testFile1 = ((MultipartHttpServletRequest) request).getFile("testFile1");
+        MultipartFile testFile2 = ((MultipartHttpServletRequest) request).getFile("testFile2");
 
-        String fileName = file.getOriginalFilename();
+        String testName1 = testFile1.getOriginalFilename();
+        String testName2 = testFile2.getOriginalFilename();
 
-        String path = SystemUtils.USER_DIR + File.separator + "upload";
-
-        File uploadFile = new File(path + File.separator + fileName);
-
-        if (!uploadFile.getParentFile().exists())
-        {
-            uploadFile.getParentFile().mkdir();
-        }
-
-        file.transferTo(uploadFile);
+        System.out.println(testName1);
+        System.out.println(testName2);
 
         return 1;
     }
