@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,12 +34,9 @@ public class FilesController
      * @author Alex
      * @date 2018.04.23 17:57
      */
-    @RequestMapping("/ckeditor_image")
-    @ResponseBody
-    public String uploadImage(@RequestParam("upload") MultipartFile file, HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(value = "/ckeditor_image", method = RequestMethod.POST)
+    public void uploadImage(@RequestParam("upload") MultipartFile file, HttpServletRequest request, HttpServletResponse response)
     {
-        String result = null;
-
         if (!file.isEmpty())
         {
             PrintWriter writer = null;
@@ -48,12 +45,11 @@ public class FilesController
             {
                 response.setContentType("text/html;charset=utf-8");
                 response.setHeader("Cache-Control", "no-cache");
+                writer = response.getWriter();
 
                 //解决跨域问题
                 //Refused to display 'http://localhost:8080/upload/mgmt/img?CKEditor=practice_content&CKEditorFuncNum=1&langCode=zh-cn' in a frame because it set 'X-Frame-Options' to 'DENY'.
                 response.setHeader("X-Frame-Options", "SAMEORIGIN");
-
-                writer = response.getWriter();
 
                 String fileName = file.getOriginalFilename();
                 String path = SystemUtils.USER_DIR + File.separator + "upload" + File.separator + ckeditorStorageImagePath + File.separator + fileName;
@@ -64,30 +60,24 @@ public class FilesController
                 file.transferTo(imageFile);
 
                 // 组装返回url，以便于ckeditor定位图片
-                String fileUrl = ckeditorAccessImageUrl + File.separator + imageFile.getName();
+                String fileUrl = ckeditorAccessImageUrl + File.separator + "upload" + File.separator + ckeditorStorageImagePath + File.separator + imageFile.getName();
 
                 // 将上传的图片的url返回给ckeditor
                 String callback = request.getParameter("CKEditorFuncNum");
                 String script = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + callback + ", '" + fileUrl + "');</script>";
 
-                writer.println(script);
+                writer.write(script);
                 writer.flush();
                 writer.close();
-
-                result = "SUCCESS";
             }
             catch (IOException e)
             {
                 logger.error("Upload error====>", e);
-                result = "FAILED";
             }
         }
         else
         {
             logger.info("File not found!");
-            result = "FAILED";
         }
-
-        return result;
     }
 }
