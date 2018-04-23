@@ -30,15 +30,12 @@
                         "descript": $("#descript").val()//关键词
                     },
                     success: function (data) {
-                        if (data == 1) {
+                        if (data === 1) {
                             alert("更新基本信息成功!");
                         }
                         else {
                             alert("更新失败");
                         }
-                    },
-                    error: function () {
-                        alert("抱歉，服务器出现了一些微小的问题");
                     }
                 };
 

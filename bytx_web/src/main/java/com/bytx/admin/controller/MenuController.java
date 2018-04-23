@@ -1,11 +1,14 @@
 package com.bytx.admin.controller;
 
 import com.bytx.admin.entity.BasicInfo;
+import com.bytx.admin.entity.CompanyInfo;
 import com.bytx.admin.service.BasicInfoQueryService;
+import com.bytx.admin.service.CompanyInfoQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -15,19 +18,25 @@ public class MenuController extends BaseController
     @Autowired
     private BasicInfoQueryService basicInfoQueryService;
 
+    @Autowired
+    private CompanyInfoQueryService companyInfoQueryService;
+
     @RequestMapping("/companyBaseInfo")
     public String showCompanyBaseInfo(Map model)
     {
         BasicInfo basicInfo = basicInfoQueryService.selectBasicInfoByStatus();
 
         model.put("basicInfo", basicInfo);
-        
+
         return "admin/companybaseinfo";
     }
 
     @RequestMapping("/companyInfo")
     public String showCompanyInfo(Map model)
     {
+        List<CompanyInfo> companyInfoList = companyInfoQueryService.selectAllCompanyInfo();
+        model.put("companyInfoList", companyInfoList);
+
         return "admin/companyinfo";
     }
 

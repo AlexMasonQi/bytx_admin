@@ -97,7 +97,7 @@
             $.ajax({
                        type: "post",
                        dataType: "text",
-                       url: contextPath + "",
+                       url: contextPath + "/companyInfo/updateInfo",
                        data: {
                            "id": $("#sm").html(),//这个是所属分类的ID
                            "content": CKEDITOR.instances.ckeditor.getData()
@@ -105,6 +105,9 @@
                        success: function (data) {
                            if (data == 1) {
                                alert("数据更新成功");
+                           }
+                           else {
+                               alert("更新失败");
                            }
                        }
                    });
