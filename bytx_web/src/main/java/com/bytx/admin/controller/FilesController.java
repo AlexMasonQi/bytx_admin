@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +36,6 @@ public class FilesController
      * @date 2018.04.23 17:57
      */
     @RequestMapping(value = "/ckeditor_image", method = RequestMethod.POST)
-    @ResponseBody
     public ResponseEntity<String> uploadImage(@RequestParam("upload") MultipartFile file, String CKEditorFuncNum, HttpServletRequest request)
     {
         System.out.println(request.getRequestURL().toString());
