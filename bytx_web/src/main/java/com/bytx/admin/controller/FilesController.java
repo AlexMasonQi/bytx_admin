@@ -1,21 +1,23 @@
 package com.bytx.admin.controller;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @Controller
 @RequestMapping("/upload")
@@ -35,24 +37,26 @@ public class FilesController
      * @date 2018.04.23 17:57
      */
     @RequestMapping(value = "/ckeditor_image", method = RequestMethod.POST)
-    public void uploadImage(@RequestParam("upload") MultipartFile file, HttpServletRequest request, HttpServletResponse response)
+    @ResponseBody
+    public ResponseEntity<String> uploadImage(@RequestParam("upload") MultipartFile file, String CKEditorFuncNum, HttpServletRequest request)
     {
+        System.out.println(request.getRequestURL().toString());
+        ResponseEntity<String> responseEntity = null;
         if (!file.isEmpty())
         {
-            PrintWriter writer = null;
+            HttpHeaders headers = new HttpHeaders();
 
             try
             {
-                response.setContentType("text/html;charset=utf-8");
-                response.setHeader("Cache-Control", "no-cache");
-                writer = response.getWriter();
+                headers.setContentType(MediaType.TEXT_HTML);
+                headers.setCacheControl("no-cache");
 
                 //解决跨域问题
                 //Refused to display 'http://localhost:8080/upload/mgmt/img?CKEditor=practice_content&CKEditorFuncNum=1&langCode=zh-cn' in a frame because it set 'X-Frame-Options' to 'DENY'.
-                response.setHeader("X-Frame-Options", "SAMEORIGIN");
+                headers.set("X-Frame-Options", "SAMEORIGIN");
 
                 String fileName = file.getOriginalFilename();
-                String path = SystemUtils.USER_DIR + File.separator + "upload" + File.separator + ckeditorStorageImagePath + File.separator + fileName;
+                String path = request.getServletContext().getRealPath("/") + "/" + "upload" + "/" + ckeditorStorageImagePath + "/" + fileName;
 
                 File imageFile = new File(path);
                 FileUtils.forceMkdir(imageFile.getParentFile());
@@ -60,24 +64,30 @@ public class FilesController
                 file.transferTo(imageFile);
 
                 // 组装返回url，以便于ckeditor定位图片
-                String fileUrl = ckeditorAccessImageUrl + File.separator + "upload" + File.separator + ckeditorStorageImagePath + File.separator + imageFile.getName();
+                String fileUrl = ckeditorAccessImageUrl + "/" + "upload" + ckeditorStorageImagePath + "/" + imageFile.getName();
 
                 // 将上传的图片的url返回给ckeditor
-                String callback = request.getParameter("CKEditorFuncNum");
-                String script = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + callback + ", '" + fileUrl + "');</script>";
+                //String callback = request.getParameter("CKEditorFuncNum");
+                System.out.println("callback = " + CKEditorFuncNum);
+                String script = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", '" + fileUrl + "');</script>";
 
-                writer.write(script);
-                writer.flush();
-                writer.close();
+                responseEntity = new ResponseEntity<>(script, headers, HttpStatus.OK);
             }
             catch (IOException e)
             {
+                HttpHeaders excHeader = new HttpHeaders();
                 logger.error("Upload error====>", e);
+                responseEntity = new ResponseEntity<>(excHeader, HttpStatus.BAD_GATEWAY);
             }
         }
         else
         {
+            HttpHeaders noFileHeader = new HttpHeaders();
+            String resp = "";
+            responseEntity = new ResponseEntity<>(resp, noFileHeader, HttpStatus.BAD_REQUEST);
             logger.info("File not found!");
         }
+
+        return responseEntity;
     }
 }
