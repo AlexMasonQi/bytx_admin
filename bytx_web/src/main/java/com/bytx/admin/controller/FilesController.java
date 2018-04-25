@@ -6,7 +6,6 @@ import com.jcraft.jsch.JSchException;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,17 +22,11 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/upload")
-public class FilesController
+public class FilesController extends BaseController
 {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final static ChannelSftp channelSftp = SFTPUtil.getChannel("47.104.142.179", "root", "BJbytx1234567", 22);
-
-    @Value(value = "${ckeditor.storage.image.path}")
-    private String ckeditorStorageImagePath;
-
-    @Value(value = "${ckeditor.access.image.url}")
-    private String ckeditorAccessImageUrl;
 
     /**
      * @description CKEDITOR上传图片
@@ -57,8 +50,8 @@ public class FilesController
                 headers.set("X-Frame-Options", "SAMEORIGIN");
 
                 String fileName = file.getOriginalFilename();
-                String tempPath = request.getServletContext().getRealPath("/") + ckeditorStorageImagePath + "/ckedtor/images/" + fileName;
-                String desPath = "/data/wwwroot/default" + ckeditorStorageImagePath + "/ckeditor/images";
+                String tempPath = request.getServletContext().getRealPath("/") + storageImagePath + "/ckedtor/images/" + fileName;
+                String desPath = "/data/wwwroot/default" + storageImagePath + "/ckeditor/images";
 
                 File imageFile = new File(tempPath);
                 FileUtils.forceMkdir(imageFile.getParentFile());
@@ -69,7 +62,7 @@ public class FilesController
                 SFTPUtil.closeConnection(channelSftp);
 
                 // 组装返回url，以便于ckeditor定位图片
-                String fileUrl = ckeditorAccessImageUrl + ckeditorStorageImagePath + "/ckeditor/images";
+                String fileUrl = accessImageUrl + storageImagePath + "/ckeditor/images/" + imageFile.getName();
                 // 将上传的图片的url返回给ckeditor
                 System.out.println("callback = " + CKEditorFuncNum);
                 String script = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", '" + fileUrl + "');</script>";

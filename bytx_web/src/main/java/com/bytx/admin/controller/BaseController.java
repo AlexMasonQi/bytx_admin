@@ -3,6 +3,7 @@ package com.bytx.admin.controller;
 import com.bytx.admin.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @author Alex
@@ -11,6 +12,13 @@ import org.apache.shiro.session.Session;
  */
 public class BaseController
 {
+
+    @Value(value = "${storage.image.path}")
+    public String storageImagePath;
+
+    @Value(value = "${access.image.url}")
+    public String accessImageUrl;
+
     /**
      * @param
      * @return 当前Session
