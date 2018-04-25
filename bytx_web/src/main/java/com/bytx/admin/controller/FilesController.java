@@ -1,5 +1,8 @@
 package com.bytx.admin.controller;
 
+import com.bytx.admin.util.SFTPUtil;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.JSchException;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +27,8 @@ public class FilesController
 {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private final static ChannelSftp channelSftp = SFTPUtil.getChannel("47.104.142.179", "root", "BJbytx1234567", 22);
+
     @Value(value = "${ckeditor.storage.image.path}")
     private String ckeditorStorageImagePath;
 
@@ -38,7 +43,6 @@ public class FilesController
     @RequestMapping(value = "/ckeditor_image", method = RequestMethod.POST)
     public ResponseEntity<String> uploadImage(@RequestParam("upload") MultipartFile file, String CKEditorFuncNum, HttpServletRequest request)
     {
-        System.out.println(request.getRequestURL().toString());
         ResponseEntity<String> responseEntity = null;
         if (!file.isEmpty())
         {
@@ -50,22 +54,23 @@ public class FilesController
                 headers.setCacheControl("no-cache");
 
                 //解决跨域问题
-                //Refused to display 'http://localhost:8080/upload/mgmt/img?CKEditor=practice_content&CKEditorFuncNum=1&langCode=zh-cn' in a frame because it set 'X-Frame-Options' to 'DENY'.
                 headers.set("X-Frame-Options", "SAMEORIGIN");
 
                 String fileName = file.getOriginalFilename();
-                String path = request.getServletContext().getRealPath("/") + "/" + "upload" + "/" + ckeditorStorageImagePath + "/" + fileName;
+                String tempPath = request.getServletContext().getRealPath("/") + ckeditorStorageImagePath + "/ckedtor/images/" + fileName;
+                String desPath = "/data/wwwroot/default" + ckeditorStorageImagePath + "/ckeditor/images";
 
-                File imageFile = new File(path);
+                File imageFile = new File(tempPath);
                 FileUtils.forceMkdir(imageFile.getParentFile());
 
                 file.transferTo(imageFile);
 
-                // 组装返回url，以便于ckeditor定位图片
-                String fileUrl = ckeditorAccessImageUrl + "/" + "upload" + ckeditorStorageImagePath + "/" + imageFile.getName();
+                SFTPUtil.uploadFile(channelSftp, tempPath, desPath);
+                SFTPUtil.closeConnection(channelSftp);
 
+                // 组装返回url，以便于ckeditor定位图片
+                String fileUrl = ckeditorAccessImageUrl + ckeditorStorageImagePath + "/ckeditor/images";
                 // 将上传的图片的url返回给ckeditor
-                //String callback = request.getParameter("CKEditorFuncNum");
                 System.out.println("callback = " + CKEditorFuncNum);
                 String script = "<script type=\"text/javascript\">window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", '" + fileUrl + "');</script>";
 
@@ -75,6 +80,12 @@ public class FilesController
             {
                 HttpHeaders excHeader = new HttpHeaders();
                 logger.error("Upload error====>", e);
+                responseEntity = new ResponseEntity<>(excHeader, HttpStatus.BAD_GATEWAY);
+            }
+            catch (JSchException e)
+            {
+                logger.error("Upload to server failed!", e);
+                HttpHeaders excHeader = new HttpHeaders();
                 responseEntity = new ResponseEntity<>(excHeader, HttpStatus.BAD_GATEWAY);
             }
         }

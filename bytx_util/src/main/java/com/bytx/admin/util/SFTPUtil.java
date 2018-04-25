@@ -121,23 +121,23 @@ public class SFTPUtil
         {
             channelSftp.disconnect();
         }
-        if (channelSftp.getSession() != null)
+        if (session != null)
         {
-            channelSftp.getSession().disconnect();
+            session.disconnect();
         }
     }
 
-    public static void main(String[] args)
-    {
-        ChannelSftp channelSftp = getChannel("47.104.142.179", "root", "BJbytx1234567", 22);
-        uploadFile(channelSftp, "D:/test/test.png", "/data/wwwroot/default/upload/ckeditor/companyInfo/images");
-        try
-        {
-            closeConnection(channelSftp);
-        }
-        catch (JSchException e)
-        {
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args)
+//    {
+//        ChannelSftp channelSftp = getChannel("47.104.142.179", "root", "BJbytx1234567", 22);
+//        uploadFile(channelSftp, "D:/test/test.png", "/data/wwwroot/default/upload/ckeditor/companyInfo/images");
+//        try
+//        {
+//            closeConnection(channelSftp);
+//        }
+//        catch (JSchException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 }
