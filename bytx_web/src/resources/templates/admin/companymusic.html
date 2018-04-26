@@ -41,31 +41,14 @@
             <td>数量</td>
             <td>操作</td>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>这里是歌名1</td>
-            <td>这里是歌手1</td>
+        <tr th:each="music:${musicList}">
+            <td th:text="${music.id}"></td>
+            <td th:text="${music.musicName}"></td>
+            <td th:text="${music.musicSinger}"></td>
             <td>
-                <p>./images/logo</p>
+                <img th:src="${music.musicImagesPath}" alt="" style="width: 50px;">
             </td>
-            <td>3</td>
-            <td>
-                <span class="glyphicon glyphicon-pencil mUpdate" aria-hidden="true" data-toggle="modal"
-                      data-target="#myModal"></span>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="glyphicon glyphicon-trash deleteCompanyMusic" aria-hidden="true"></span>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span class="glyphicon glyphicon-arrow-up topCompanyMusic" aria-hidden="true"></span>
-            </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>这里是歌名2</td>
-            <td>这里是歌手2</td>
-            <td>
-                <p>./images/logo</p>
-            </td>
-            <td>2</td>
+            <td th:text="${music.musicImagesCount}"></td>
             <td>
                 <span class="glyphicon glyphicon-pencil mUpdate" aria-hidden="true" data-toggle="modal"
                       data-target="#myModal"></span>
@@ -95,16 +78,16 @@
                         </div>
                         <div class="form-group">
                             <label for="images">图片</label>
-                            <input type="file" id="images" multiple="multiple">
+                            <input type="file" id="images" name="imageFile" multiple="multiple">
                         </div>
                         <div class="form-group">
                             <label for="images">歌词</label>
-                            <input type="file" id="lrc">
+                            <input type="file" name="srcFile" id="lrc">
                             <p style="color:red;display: none">重新上传请选择文件</p>
                         </div>
                         <div class="form-group">
                             <label for="images">音乐</label>
-                            <input type="file" id="music">
+                            <input type="file" name="musicFile" id="music">
                             <p style="color:red;display: none">重新上传请选择文件</p>
                         </div>
                         <div class="form-group">
@@ -131,23 +114,23 @@
         $(".setCompanyMusic").click(function () {
             console.log()
             $.ajax({
-                       type: "post",
-                       dataType: "text",
-                       url: "",
-                       data: {
-                           id: $("#testID").html(),//音乐的id，如果为空则代表新增一条数据，如果不为空则代表要更新一条音乐，如果你要是对接麻烦那就不让他更新，直接删除重新上传也行，看你把
+                type: "post",
+                dataType: "text",
+                url: "",
+                data: {
+                    id: $("#testID").html(),//音乐的id，如果为空则代表新增一条数据，如果不为空则代表要更新一条音乐，如果你要是对接麻烦那就不让他更新，直接删除重新上传也行，看你把
 
-                           src: $("#music").val(),//检测是否为空，为空则不更新这个字段
-                           lrc: $("#lrc").val(),//检测是否为空，为空则不更新这个字段
-                           images: $("#images").val(),//检测是否为空，为空则不更新这个字段，，！！这个是多图片上传，也就是说这个里边可能含有多个图片信息
+                    src: $("#music").val(),//检测是否为空，为空则不更新这个字段
+                    lrc: $("#lrc").val(),//检测是否为空，为空则不更新这个字段
+                    images: $("#images").val(),//检测是否为空，为空则不更新这个字段，，！！这个是多图片上传，也就是说这个里边可能含有多个图片信息
 
-                           singer: $("#singer").val(),//不检测 直接覆盖
-                           title: $("#title").val()//不检测 直接覆盖
-                       },
-                       success: function (data) {
-                           alert("数据更新成功")
-                       }
-                   });
+                    singer: $("#singer").val(),//不检测 直接覆盖
+                    title: $("#title").val()//不检测 直接覆盖
+                },
+                success: function (data) {
+                    alert("数据更新成功")
+                }
+            });
 
         })
         //删除一条音乐
@@ -155,31 +138,31 @@
             let res = confirm("确认要删除这个音乐吗?")
             if (res == true) {
                 $.ajax({
-                           type: "post",
-                           dataType: "text",
-                           url: "",
-                           data: {
-                               id: $(this).parent().prev().prev().prev().prev().prev().html()//音乐的ID
-                           },
-                           success: function (data) {
-                               alert("数据更新成功")
-                           }
-                       });
+                    type: "post",
+                    dataType: "text",
+                    url: "",
+                    data: {
+                        id: $(this).parent().prev().prev().prev().prev().prev().html()//音乐的ID
+                    },
+                    success: function (data) {
+                        alert("数据更新成功")
+                    }
+                });
             }
         })
         //置顶一条音乐
         $(".topCompanyMusic").click(function () {
             $.ajax({
-                       type: "post",
-                       dataType: "text",
-                       url: "",
-                       data: {
-                           id: $(this).parent().prev().prev().prev().prev().prev().html()//音乐的ID
-                       },
-                       success: function (data) {
-                           alert("数据更新成功")
-                       }
-                   });
+                type: "post",
+                dataType: "text",
+                url: "",
+                data: {
+                    id: $(this).parent().prev().prev().prev().prev().prev().html()//音乐的ID
+                },
+                success: function (data) {
+                    alert("数据更新成功")
+                }
+            });
         })
         //这个不需要对接
         $(".mUpdate").click(function () {
@@ -214,22 +197,22 @@
             $("#singer").val("");
             $("#title").val("");
         });
-    })
+    });
 
     //删除音乐中的一个图片,因为图片是动态加载的，所以得用原生js，可以嵌套jquery，放心用
     function deleteCompanyMusicImage(ev) {
         $.ajax({
-                   type: "post",
-                   dataType: "text",
-                   url: "",
-                   data: {
-                       id: $("#testID").html(),//音乐的id
-                       count: ev.parentNode.parentNode.firstChild.innerHTML  //图片的编号
-                   },
-                   success: function (data) {
-                       alert("数据更新成功")
-                   }
-               });
+            type: "post",
+            dataType: "text",
+            url: "",
+            data: {
+                id: $("#testID").html(),//音乐的id
+                count: ev.parentNode.parentNode.firstChild.innerHTML  //图片的编号
+            },
+            success: function (data) {
+                alert("数据更新成功")
+            }
+        });
     }
 
 </script>

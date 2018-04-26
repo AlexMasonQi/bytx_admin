@@ -3,9 +3,11 @@ package com.bytx.admin.controller;
 import com.bytx.admin.entity.BasicInfo;
 import com.bytx.admin.entity.CompanyInfo;
 import com.bytx.admin.entity.Media;
+import com.bytx.admin.entity.Music;
 import com.bytx.admin.service.BasicInfoQueryService;
 import com.bytx.admin.service.CompanyInfoQueryService;
 import com.bytx.admin.service.MediaQueryService;
+import com.bytx.admin.service.MusicQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,9 @@ public class MenuController extends BaseController
 
     @Autowired
     private MediaQueryService mediaQueryService;
+
+    @Autowired
+    private MusicQueryService musicQueryService;
 
     @RequestMapping("/companyBaseInfo")
     public String showCompanyBaseInfo(Map model)
@@ -50,13 +55,16 @@ public class MenuController extends BaseController
     {
         List<Media> mediaList = mediaQueryService.selectAllMedia();
         model.put("mediaList", mediaList);
-        
+
         return "admin/companymedia";
     }
 
     @RequestMapping("/companyMusic")
     public String showCompanyMusic(Map model)
     {
+        List<Music> musicList = musicQueryService.selectAllSongs();
+        model.put("musicList", musicList);
+
         return "admin/companymusic";
     }
 
