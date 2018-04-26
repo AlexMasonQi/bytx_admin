@@ -121,7 +121,7 @@
         <appender-ref ref="info_log"/>
     </logger>
 
-    <logger name="com.byao.website.dao" level="DEBUG"/>
+    <logger name="com.bytx.admin.dao" level="DEBUG"/>
 
     <root level="${log_level_info}">
         <appender-ref ref="console"/>
