@@ -22,4 +22,9 @@ public class MediaQueryService
     {
         return mediaDao.selectAllMedia();
     }
+
+    public Integer selectParentIdById(Integer id)
+    {
+        return mediaDao.selectParentIdById(id);
+    }
 }

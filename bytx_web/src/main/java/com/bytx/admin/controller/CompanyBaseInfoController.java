@@ -4,8 +4,6 @@ import com.bytx.admin.entity.BasicInfo;
 import com.bytx.admin.service.BasicInfoQueryService;
 import com.bytx.admin.service.CompanyBaseInfoPersistenceService;
 import com.bytx.admin.util.SFTPUtil;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSchException;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,8 +26,6 @@ public class CompanyBaseInfoController extends BaseController
 
     @Autowired
     private BasicInfoQueryService basicInfoQueryService;
-
-    private final static ChannelSftp channelSftp = SFTPUtil.getChannel("47.104.142.179", "root", "BJbytx1234567", 22);
 
     @RequestMapping("/showBaseInfo")
     public String showBaseInfo(Map model)
@@ -75,19 +71,13 @@ public class CompanyBaseInfoController extends BaseController
             logoFile.transferTo(lFile);
             codeFile.transferTo(qFile);
 
-            SFTPUtil.uploadFile(channelSftp, logoPath, remoteLogoPath);
-            SFTPUtil.uploadFile(channelSftp, codePath, remoteCodePath);
-
-            SFTPUtil.closeConnection(channelSftp);
+            SFTPUtil.uploadFile(BaseController.channelSftp, logoPath, remoteLogoPath);
+            SFTPUtil.uploadFile(BaseController.channelSftp, codePath, remoteCodePath);
 
             basicInfo.setBasicLogo(remoteLogoUrl);
             basicInfo.setBasicQrcode(remoteCodeUrl);
         }
         catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (JSchException e)
         {
             e.printStackTrace();
         }

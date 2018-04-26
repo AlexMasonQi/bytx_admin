@@ -12,4 +12,8 @@ public interface MediaDao
     List<Media> selectMediasByParentId(@Param("parentId") Integer parentId);
 
     List<Media> selectAllMedia();
+
+    Integer selectParentIdById(@Param("id") Integer id);
+
+    Integer updateMedia(Media media);
 }

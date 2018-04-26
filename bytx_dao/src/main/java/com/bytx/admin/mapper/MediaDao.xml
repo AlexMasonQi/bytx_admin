@@ -38,4 +38,37 @@
         from company_media
     </select>
 
+    <select id="selectParentIdById" resultType="java.lang.Integer">
+        select parent_id
+        from company_media
+        where id = #{id}
+    </select>
+
+    <update id="updateMedia">
+        update company_media
+        <set>
+            <if test="parentId!=null">
+                parent_id=#{parentId},
+            </if>
+            <if test="mediaId!=null">
+                media_id=#{mediaId},
+            </if>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+            <if test="images!=null">
+                images=#{images},
+            </if>
+            <if test="tag!=null">
+                tag=#{tag}
+            </if>
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
 </mapper>

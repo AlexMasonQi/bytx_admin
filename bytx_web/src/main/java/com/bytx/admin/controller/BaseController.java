@@ -1,6 +1,8 @@
 package com.bytx.admin.controller;
 
 import com.bytx.admin.entity.User;
+import com.bytx.admin.util.SFTPUtil;
+import com.jcraft.jsch.ChannelSftp;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class BaseController
 {
+    public static ChannelSftp channelSftp = SFTPUtil.getChannel("47.104.142.179", "root", "BJbytx1234567", 22);
 
     @Value(value = "${storage.image.path}")
     public String storageImagePath;

@@ -1,8 +1,6 @@
 package com.bytx.admin.controller;
 
 import com.bytx.admin.util.SFTPUtil;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSchException;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +23,6 @@ import java.io.IOException;
 public class FilesController extends BaseController
 {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private final static ChannelSftp channelSftp = SFTPUtil.getChannel("47.104.142.179", "root", "BJbytx1234567", 22);
 
     /**
      * @description CKEDITOR上传图片
@@ -58,8 +54,7 @@ public class FilesController extends BaseController
 
                 file.transferTo(imageFile);
 
-                SFTPUtil.uploadFile(channelSftp, tempPath, desPath);
-                SFTPUtil.closeConnection(channelSftp);
+                SFTPUtil.uploadFile(BaseController.channelSftp, tempPath, desPath);
 
                 // 组装返回url，以便于ckeditor定位图片
                 String fileUrl = accessImageUrl + storageImagePath + "/ckeditor/images/" + imageFile.getName();
@@ -73,12 +68,6 @@ public class FilesController extends BaseController
             {
                 HttpHeaders excHeader = new HttpHeaders();
                 logger.error("Upload error====>", e);
-                responseEntity = new ResponseEntity<>(excHeader, HttpStatus.BAD_GATEWAY);
-            }
-            catch (JSchException e)
-            {
-                logger.error("Upload to server failed!", e);
-                HttpHeaders excHeader = new HttpHeaders();
                 responseEntity = new ResponseEntity<>(excHeader, HttpStatus.BAD_GATEWAY);
             }
         }

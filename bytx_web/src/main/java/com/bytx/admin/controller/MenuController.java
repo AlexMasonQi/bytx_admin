@@ -2,8 +2,10 @@ package com.bytx.admin.controller;
 
 import com.bytx.admin.entity.BasicInfo;
 import com.bytx.admin.entity.CompanyInfo;
+import com.bytx.admin.entity.Media;
 import com.bytx.admin.service.BasicInfoQueryService;
 import com.bytx.admin.service.CompanyInfoQueryService;
+import com.bytx.admin.service.MediaQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,9 @@ public class MenuController extends BaseController
 
     @Autowired
     private CompanyInfoQueryService companyInfoQueryService;
+
+    @Autowired
+    private MediaQueryService mediaQueryService;
 
     @RequestMapping("/companyBaseInfo")
     public String showCompanyBaseInfo(Map model)
@@ -43,6 +48,9 @@ public class MenuController extends BaseController
     @RequestMapping("/companyMedia")
     public String showCompanyMedia(Map model)
     {
+        List<Media> mediaList = mediaQueryService.selectAllMedia();
+        model.put("mediaList", mediaList);
+        
         return "admin/companymedia";
     }
 

@@ -20,6 +20,7 @@
             $(".save").click(function () {
                 var option = {
                     type: "post",
+                    dateType: "text",
                     url: contextPath + "/info/updateBasicInfo",
                     data: {
                         "basicName": $("#name").val(),//公司名称
@@ -30,7 +31,7 @@
                         "descript": $("#descript").val()//关键词
                     },
                     success: function (data) {
-                        if (data === 1) {
+                        if (data == 1) {
                             alert("更新基本信息成功!");
                         }
                         else {
