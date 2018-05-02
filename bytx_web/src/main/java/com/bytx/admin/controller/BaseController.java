@@ -16,10 +16,10 @@ public class BaseController
 {
     public static ChannelSftp channelSftp = SFTPUtil.getChannel("47.104.142.179", "root", "BJbytx1234567", 22);
 
-    @Value(value = "${storage.image.path}")
+    @Value(value = "${storage.file.path}")
     public String storageImagePath;
 
-    @Value(value = "${access.image.url}")
+    @Value(value = "${access.file.url}")
     public String accessImageUrl;
 
     /**

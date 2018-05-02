@@ -11,6 +11,7 @@
         <result column="music_lrc_src" property="musicLrcPath"/>
         <result column="music_images" property="musicImagesPath"/>
         <result column="music_images_count" property="musicImagesCount"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <!--根据ID查询歌曲-->
@@ -23,9 +24,10 @@
             music_time,
             music_lrc_src,
             music_images,
-            music_images_count
+            music_images_count,
+            status
         from company_music
-        where id = #{id}
+        where id = #{id} and status=1
     </select>
 
     <!--查询所有歌曲-->
@@ -38,7 +40,13 @@
             music_time,
             music_lrc_src,
             music_images,
-            music_images_count
+            music_images_count,
+            status
         from company_music
     </select>
+
+    <!--添加歌曲-->
+    <insert id="addMusic">
+        insert into company_music(music_src,music_name,music_singer,music_time,music_lrc_src,music_images,music_images_count,status) values(#{musicPath},#{musicName},#{musicSinger},#{musicTime},#{musicLrcPath},#{musicImagesPath},#{musicImagesCount},#{status})
+    </insert>
 </mapper>

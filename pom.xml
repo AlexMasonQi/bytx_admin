@@ -272,6 +272,9 @@
                 <version>3.7.0</version>
                 <configuration>
                     <release>10</release>
+                    <compilerArguments>
+                        <extdirs>/lib</extdirs>
+                    </compilerArguments>
                 </configuration>
                 <dependencies>
                     <dependency>

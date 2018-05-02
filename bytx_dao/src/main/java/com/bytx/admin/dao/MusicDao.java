@@ -12,4 +12,6 @@ public interface MusicDao
     Music selectSongsById(@Param("id") Integer id);
 
     List<Music> selectAllSongs();
+
+    Integer addMusic(Music music);
 }

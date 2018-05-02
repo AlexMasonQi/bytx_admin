@@ -12,6 +12,7 @@ public class Music implements Serializable
     private String musicLrcPath;
     private String musicImagesPath;
     private String musicImagesCount;
+    private Integer status;
 
     public Integer getId()
     {
@@ -93,9 +94,19 @@ public class Music implements Serializable
         this.musicImagesCount = musicImagesCount;
     }
 
+    public Integer getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(Integer status)
+    {
+        this.status = status;
+    }
+
     @Override
     public String toString()
     {
-        return "Music{" + "id=" + id + ", musicPath='" + musicPath + '\'' + ", musicName='" + musicName + '\'' + ", musicSinger='" + musicSinger + '\'' + ", musicTime='" + musicTime + '\'' + ", musicLrcPath='" + musicLrcPath + '\'' + ", musicImagesPath='" + musicImagesPath + '\'' + ", musicImagesCount='" + musicImagesCount + '\'' + '}';
+        return "Music{" + "id=" + id + ", musicPath='" + musicPath + '\'' + ", musicName='" + musicName + '\'' + ", musicSinger='" + musicSinger + '\'' + ", musicTime='" + musicTime + '\'' + ", musicLrcPath='" + musicLrcPath + '\'' + ", musicImagesPath='" + musicImagesPath + '\'' + ", musicImagesCount='" + musicImagesCount + '\'' + ", status=" + status + '}';
     }
 }

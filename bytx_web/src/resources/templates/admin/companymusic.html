@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.form.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <title></title>
@@ -39,19 +40,19 @@
             <td>歌手</td>
             <td>图片</td>
             <td>数量</td>
+            <td>状态</td>
             <td>操作</td>
         </tr>
         <tr th:each="music:${musicList}">
             <td th:text="${music.id}"></td>
             <td th:text="${music.musicName}"></td>
             <td th:text="${music.musicSinger}"></td>
-            <td>
-                <img th:src="${music.musicImagesPath}" alt="" style="width: 50px;">
-            </td>
+            <td th:text="${music.musicImagesPath}"></td>
             <td th:text="${music.musicImagesCount}"></td>
+            <td th:text="${music.status} == 1 ? '正常':'禁用'"></td>
             <td>
                 <span class="glyphicon glyphicon-pencil mUpdate" aria-hidden="true" data-toggle="modal"
-                      data-target="#myModal"></span>
+                      data-target="#updateModal"></span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span class="glyphicon glyphicon-trash deleteCompanyMusic" aria-hidden="true"></span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -61,7 +62,7 @@
     </table>
 
 
-    <!-- //这个div不需要对接 -->
+    <!-- 上传音乐 -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -73,20 +74,22 @@
                     <span id="testID"></span>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group updatemusicimage" style="display: none">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="imageNum">图片数量</label>
+                            <input type="text" class="form-control" id="imageNum" placeholder="图片数量">
                         </div>
                         <div class="form-group">
                             <label for="images">图片</label>
-                            <input type="file" id="images" name="imageFile" multiple="multiple">
+                            <input type="file" id="images" name="imageFile">
                         </div>
                         <div class="form-group">
-                            <label for="images">歌词</label>
-                            <input type="file" name="srcFile" id="lrc">
+                            <label for="lrc">歌词</label>
+                            <input type="file" name="lrcFile" id="lrc">
                             <p style="color:red;display: none">重新上传请选择文件</p>
                         </div>
                         <div class="form-group">
-                            <label for="images">音乐</label>
+                            <label for="music">音乐</label>
                             <input type="file" name="musicFile" id="music">
                             <p style="color:red;display: none">重新上传请选择文件</p>
                         </div>
@@ -98,123 +101,109 @@
                             <label for="title">歌名</label>
                             <input type="text" class="form-control" id="title" placeholder="歌名">
                         </div>
+                        <div class="form-group">
+                            <label for="status1">状态</label><br>
+                            <input type="radio" name="status" value="1" id="status1" checked> 启用
+                            <input type="radio" name="status" value="0" id="status2"> 禁用
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary setCompanyMusic">上传</button>
+                    <button type="button" class="btn btn-primary btnUpload">上传</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 更新音乐信息 -->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel1">更新音乐信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="updateForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="updateImageNum">图片数量</label>
+                            <input type="text" class="form-control" id="updateImageNum" placeholder="图片数量">
+                        </div>
+                        <div class="form-group">
+                            <label for="updateImages">图片</label>
+                            <input type="file" id="updateImages" name="updateImageFile" multiple="multiple">
+                        </div>
+                        <div class="form-group">
+                            <label for="updateLrc">歌词</label>
+                            <input type="file" name="updateLrcFile" id="updateLrc">
+                            <p style="color:red;display: none">重新上传请选择文件</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateMusic">音乐</label>
+                            <input type="file" name="updateMusicFile" id="updateMusic">
+                            <p style="color:red;display: none">重新上传请选择文件</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateSinger">歌手</label>
+                            <input type="text" class="form-control" id="updateSinger" placeholder="歌手">
+                        </div>
+                        <div class="form-group">
+                            <label for="updateTitle">歌名</label>
+                            <input type="text" class="form-control" id="updateTitle" placeholder="歌名">
+                        </div>
+                        <div class="form-group">
+                            <label for="updateStatus1">状态</label><br>
+                            <input type="radio" name="updateStatus" value="1" id="updateStatus1"
+                                   checked> 启用
+                            <input type="radio" name="updateStatus" value="0" id="updateStatus2">
+                            禁用
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary btnUpdate">更新</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script>
+    /*<![CDATA[*/
+    var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
+
     $(function () {
-        //上传或者更新一个数据
-        $(".setCompanyMusic").click(function () {
-            console.log()
-            $.ajax({
+
+        //添加音乐
+        $(".btnUpload").click(function () {
+            var option = {
                 type: "post",
-                dataType: "text",
-                url: "",
+                url: contextPath + "/music/addMusic.do",
                 data: {
-                    id: $("#testID").html(),//音乐的id，如果为空则代表新增一条数据，如果不为空则代表要更新一条音乐，如果你要是对接麻烦那就不让他更新，直接删除重新上传也行，看你把
-
-                    src: $("#music").val(),//检测是否为空，为空则不更新这个字段
-                    lrc: $("#lrc").val(),//检测是否为空，为空则不更新这个字段
-                    images: $("#images").val(),//检测是否为空，为空则不更新这个字段，，！！这个是多图片上传，也就是说这个里边可能含有多个图片信息
-
-                    singer: $("#singer").val(),//不检测 直接覆盖
-                    title: $("#title").val()//不检测 直接覆盖
+                    "musicImagesCount": $("#imageNum").val(),
+                    "musicSinger": $("#singer").val(),
+                    "musicName": $("#title").val(),
+                    "status": $("input:radio[name='status']:checked").val()
                 },
                 success: function (data) {
-                    alert("数据更新成功")
-                }
-            });
-
-        })
-        //删除一条音乐
-        $(".deleteCompanyMusic").click(function () {
-            let res = confirm("确认要删除这个音乐吗?")
-            if (res == true) {
-                $.ajax({
-                    type: "post",
-                    dataType: "text",
-                    url: "",
-                    data: {
-                        id: $(this).parent().prev().prev().prev().prev().prev().html()//音乐的ID
-                    },
-                    success: function (data) {
-                        alert("数据更新成功")
+                    if (data == 1) {
+                        alert("添加音乐成功");
                     }
-                });
-            }
-        })
-        //置顶一条音乐
-        $(".topCompanyMusic").click(function () {
-            $.ajax({
-                type: "post",
-                dataType: "text",
-                url: "",
-                data: {
-                    id: $(this).parent().prev().prev().prev().prev().prev().html()//音乐的ID
-                },
-                success: function (data) {
-                    alert("数据更新成功")
+                    else {
+                        alert("添加音乐失败");
+                    }
                 }
-            });
-        })
-        //这个不需要对接
-        $(".mUpdate").click(function () {
-            let id = $(this).parent().prev().prev().prev().prev().prev().html();
-            let title = $(this).parent().prev().prev().prev().prev().html();
-            let singer = $(this).parent().prev().prev().prev().html();
-            let imageSrc = $(this).parent().prev().prev().children().html();
-            let imagesNumber = $(this).parent().prev().html();
-            $(".updatemusicimage").css("display", "block");
-            $("#testID").empty().append(id);
-            let str = "";
-            str += "<table class='table table-condensed' style='height: 50px;line-height:50px;text-align: center;'><tr><td>id</td><td>图片</td><td>操作</td></tr>"
-            for (let i = 1; i <= imagesNumber; i++) {
-                str += "<tr>";
-                str += "<td>" + i + "</td>";
-                str += "<td><img src='" + imageSrc + i + ".png" + " 'style='width: 100px;'></td>";
-                str += "<td><span class='glyphicon glyphicon-trash' onclick='deleteCompanyMusicImage(this)' aria-hidden='true'></span></td>"
-                str += "</tr>"
-            }
-            str += "</table>";
-            $(".updatemusicimage").empty().append(str);
-            $("#lrc").next().css("display", "block");
-            $("#music").next().css("display", "block");
-            $("#singer").val(singer);
-            $("#title").val(title);
-        });
-        $(".addnewmusic").click(function () {
-            $(".updatemusicimage").empty().css("display", "none");
-            $("#testID").empty();
-            $("#lrc").next().css("display", "none");
-            $("#music").next().css("display", "none");
-            $("#singer").val("");
-            $("#title").val("");
+            };
+
+            $("#uploadForm").ajaxSubmit(option);
         });
     });
 
-    //删除音乐中的一个图片,因为图片是动态加载的，所以得用原生js，可以嵌套jquery，放心用
-    function deleteCompanyMusicImage(ev) {
-        $.ajax({
-            type: "post",
-            dataType: "text",
-            url: "",
-            data: {
-                id: $("#testID").html(),//音乐的id
-                count: ev.parentNode.parentNode.firstChild.innerHTML  //图片的编号
-            },
-            success: function (data) {
-                alert("数据更新成功")
-            }
-        });
-    }
-
+    /*]]>*/
 </script>
 </body>
 
