@@ -14,4 +14,6 @@ public interface MusicDao
     List<Music> selectAllSongs();
 
     Integer addMusic(Music music);
+
+    Integer updateMusicInfoById(Music music);
 }

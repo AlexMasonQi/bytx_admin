@@ -27,4 +27,9 @@ public class NewsCenterQueryService
     {
         return newsCenterDao.selectthreeNews();
     }
+
+    public List<NewsCenter> selectAllNews()
+    {
+        return newsCenterDao.selectAllNews();
+    }
 }

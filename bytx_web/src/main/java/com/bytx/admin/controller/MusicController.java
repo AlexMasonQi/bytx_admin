@@ -50,7 +50,7 @@ public class MusicController extends BaseController
         String remoteLrcPath = "/data/wwwroot/default" + storageImagePath + "/music/lrc";
         String remoteMusicPath = "/data/wwwroot/default" + storageImagePath + "/music/musicFile";
 
-        String remoteImgUrl = accessImageUrl + storageImagePath + "/music/img/" + imgFileName.substring(imgFileName.lastIndexOf("."));
+        String remoteImgUrl = accessImageUrl + storageImagePath + "/music/img/" + imgFileName.substring(0, imgFileName.lastIndexOf("."));
         String remoteLrcUrl = accessImageUrl + storageImagePath + "/music/lrc/" + lrcFileName;
         String remoteMusicUrl = accessImageUrl + storageImagePath + "/music/musicFile/" + musicFileName;
 
@@ -82,6 +82,67 @@ public class MusicController extends BaseController
             e.printStackTrace();
         }
 
-        return 0;
+        return musicPersistenceService.addMusic(music);
+    }
+
+    @RequestMapping("/updateMusic")
+    @ResponseBody
+    public Integer updateMusic(HttpServletRequest request, Music music)
+    {
+        String basePath = request.getServletContext().getRealPath("/");
+
+        MultipartFile imgFile = ((MultipartHttpServletRequest) request).getFile("updateImageFile");
+        MultipartFile lrcFile = ((MultipartHttpServletRequest) request).getFile("updateLrcFile");
+        MultipartFile musicFile = ((MultipartHttpServletRequest) request).getFile("updateMusicFile");
+
+        if (imgFile != null && lrcFile != null && musicFile != null)
+        {
+            String imgFileName = imgFile.getOriginalFilename();
+            String lrcFileName = lrcFile.getOriginalFilename();
+            String musicFileName = musicFile.getOriginalFilename();
+
+            String rootPath = basePath + storageImagePath + "/music";
+            String imgPath = rootPath + "/img/" + imgFileName;
+            String lrcPath = rootPath + "/lrc/" + lrcFileName;
+            String musicPath = rootPath + "/musicFile/" + musicFileName;
+
+            String remoteImgPath = "/data/wwwroot/default" + storageImagePath + "/music/img";
+            String remoteLrcPath = "/data/wwwroot/default" + storageImagePath + "/music/lrc";
+            String remoteMusicPath = "/data/wwwroot/default" + storageImagePath + "/music/musicFile";
+
+            String remoteImgUrl = accessImageUrl + storageImagePath + "/music/img/" + imgFileName.substring(0, imgFileName.lastIndexOf("."));
+            String remoteLrcUrl = accessImageUrl + storageImagePath + "/music/lrc/" + lrcFileName;
+            String remoteMusicUrl = accessImageUrl + storageImagePath + "/music/musicFile/" + musicFileName;
+
+            File tmpImgFile = new File(imgPath);
+            File tmpLrcFile = new File(lrcPath);
+            File tmpMusicFile = new File(musicPath);
+
+            try
+            {
+                FileUtils.forceMkdir(tmpImgFile.getParentFile());
+                FileUtils.forceMkdir(tmpLrcFile.getParentFile());
+                FileUtils.forceMkdir(tmpMusicFile.getParentFile());
+
+                imgFile.transferTo(tmpImgFile);
+                lrcFile.transferTo(tmpLrcFile);
+                musicFile.transferTo(tmpMusicFile);
+
+                SFTPUtil.uploadFile(BaseController.channelSftp, imgPath, remoteImgPath);
+                SFTPUtil.uploadFile(BaseController.channelSftp, lrcPath, remoteLrcPath);
+                SFTPUtil.uploadFile(BaseController.channelSftp, musicPath, remoteMusicPath);
+
+                music.setMusicImagesPath(remoteImgUrl);
+                music.setMusicLrcPath(remoteLrcUrl);
+                music.setMusicPath(remoteMusicUrl);
+                music.setMusicTime(MusicUtil.getMusicTime(tmpMusicFile));
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return musicPersistenceService.updateMusicInfoById(music);
     }
 }

@@ -128,6 +128,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="updateForm" enctype="multipart/form-data">
+                        <input type="hidden" id="updateMusicId">
                         <div class="form-group">
                             <label for="updateImageNum">图片数量</label>
                             <input type="text" class="form-control" id="updateImageNum" placeholder="图片数量">
@@ -156,10 +157,8 @@
                         </div>
                         <div class="form-group">
                             <label for="updateStatus1">状态</label><br>
-                            <input type="radio" name="updateStatus" value="1" id="updateStatus1"
-                                   checked> 启用
-                            <input type="radio" name="updateStatus" value="0" id="updateStatus2">
-                            禁用
+                            <input type="radio" name="updateStatus" value="1" id="updateStatus1"> 启用
+                            <input type="radio" name="updateStatus" value="0" id="updateStatus2"> 禁用
                         </div>
                     </form>
                 </div>
@@ -172,7 +171,7 @@
     </div>
 </div>
 
-<script>
+<script th:inline="javascript">
     /*<![CDATA[*/
     var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
 
@@ -192,6 +191,7 @@
                 success: function (data) {
                     if (data == 1) {
                         alert("添加音乐成功");
+                        window.location.href = contextPath + "/menu/companyMusic";
                     }
                     else {
                         alert("添加音乐失败");
@@ -200,6 +200,86 @@
             };
 
             $("#uploadForm").ajaxSubmit(option);
+        });
+
+        $(".mUpdate").click(function () {
+            var id = $(this).parent().prev().prev().prev().prev().prev().prev().html();
+            var musicName = $(this).parent().prev().prev().prev().prev().prev().html();
+            var musicSinger = $(this).parent().prev().prev().prev().prev().html();
+            var musicImagesCount = $(this).parent().prev().prev().html();
+            var statusName = $(this).parent().prev().text();
+
+            if (statusName === "正常") {
+                $("#updateStatus1").attr("checked", "checked");
+                $("#updateStatus2").removeAttr("checked");
+            }
+            else if (statusName === "禁用") {
+                $("#updateStatus1").removeAttr("checked");
+                $("#updateStatus2").attr("checked", "checked");
+            }
+
+            $("#updateMusicId").val(id);
+            $("#updateImageNum").val(musicImagesCount);
+            $("#updateSinger").val(musicSinger);
+            $("#updateTitle").val(musicName);
+        });
+
+        //更新音乐信息
+        $(".btnUpdate").click(function () {
+            var option = {
+                type: "post",
+                url: contextPath + "/music/updateMusic.do",
+                data: {
+                    "id": $("#updateMusicId").val(),
+                    "musicImagesCount": $("#updateImageNum").val(),
+                    "musicSinger": $("#updateSinger").val(),
+                    "musicName": $("#updateTitle").val(),
+                    "status": $("input:radio[name='updateStatus']:checked").val()
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        alert("更新音乐信息成功");
+                        window.location.href = contextPath + "/menu/companyMusic";
+                    }
+                    else {
+                        alert("更新音乐信息失败");
+                    }
+                }
+            };
+            $("#updateForm").ajaxSubmit(option);
+        });
+
+        //启用/禁用音乐
+        $(".deleteCompanyMusic").click(function () {
+            var id = $(this).parent().prev().prev().prev().prev().prev().prev().html();
+            var statusName = $(this).parent().prev().text();
+            var stat;
+
+            if (statusName === "正常") {
+                stat = 0
+            }
+            else if (statusName === "禁用") {
+                stat = 1;
+            }
+
+            $.ajax({
+                       type: "post",
+                       dataType: "text",
+                       url: contextPath + "/music/updateMusic.do",
+                       data: {
+                           "id": id,
+                           "status": stat
+                       },
+                       success: function (data) {
+                           if (data == 1) {
+                               alert("操作成功");
+                               window.location.href = contextPath + "/menu/companyMusic";
+                           }
+                           else {
+                               alert("操作失败");
+                           }
+                       }
+                   });
         });
     });
 

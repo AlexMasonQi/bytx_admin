@@ -9,6 +9,7 @@
         <result column="content" property="content"/>
         <result column="image_src" property="imageSrc"/>
         <result column="parent_id" property="parentId"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <select id="selectNewsCenterById" resultMap="newsCenterMap">
@@ -18,7 +19,8 @@
             introduction,
             content,
             image_src,
-            parent_id
+            parent_id,
+            status
         from company_news
         where id = #{id}
     </select>
@@ -29,7 +31,8 @@
             news_id,
             introduction,
             content,
-            parent_id
+            parent_id,
+            status
         from company_news
         where news_id = #{newsId}
     </select>
@@ -40,8 +43,53 @@
             news_id,
             introduction,
             content,
-            parent_id
+            parent_id,
+            status
         from company_news
+        where status = 1
         limit 0, 3
     </select>
+
+    <select id="selectAllNews" resultMap="newsCenterMap">
+        select
+            id,
+            news_id,
+            introduction,
+            content,
+            parent_id,
+            status
+        from company_news
+    </select>
+
+    <!--添加新闻-->
+    <insert id="addNews">
+        insert into company_news (id, introduction, content, image_src, parent_id, status)
+        values (#{id}, #{introduction}, #{content}, #{imageSrc}, #{parentId}, #{status})
+    </insert>
+
+    <!--更新新闻-->
+    <update id="updateNewsById">
+        update company_news
+        <set>
+            <if test="id!=null">
+                id=#{id},
+            </if>
+            <if test="introduction!=null">
+                introduction=#{introduction},
+            </if>
+            <if test="content!=null">
+                content=#{content},
+            </if>
+            <if test="imageSrc!=null">
+                image_src=#{imageSrc},
+            </if>
+            <if test="parentId!=null">
+                parent_id=#{parentId},
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        where news_id=#{newsId}
+    </update>
 </mapper>

@@ -17,4 +17,9 @@ public class MusicPersistenceService
     {
         return musicDao.addMusic(music);
     }
+
+    public Integer updateMusicInfoById(Music music)
+    {
+        return musicDao.updateMusicInfoById(music);
+    }
 }

@@ -27,7 +27,7 @@
             music_images_count,
             status
         from company_music
-        where id = #{id} and status=1
+        where id = #{id} and status = 1
     </select>
 
     <!--查询所有歌曲-->
@@ -47,6 +47,40 @@
 
     <!--添加歌曲-->
     <insert id="addMusic">
-        insert into company_music(music_src,music_name,music_singer,music_time,music_lrc_src,music_images,music_images_count,status) values(#{musicPath},#{musicName},#{musicSinger},#{musicTime},#{musicLrcPath},#{musicImagesPath},#{musicImagesCount},#{status})
+        insert into company_music (music_src, music_name, music_singer, music_time, music_lrc_src, music_images, music_images_count, status)
+        values (#{musicPath}, #{musicName}, #{musicSinger}, #{musicTime}, #{musicLrcPath}, #{musicImagesPath},
+                #{musicImagesCount}, #{status})
     </insert>
+
+    <!--更新歌曲-->
+    <update id="updateMusicInfoById">
+        update company_music
+        <set>
+            <if test="musicPath!=null">
+                music_src=#{musicPath},
+            </if>
+            <if test="musicName!=null">
+                music_name=#{musicName},
+            </if>
+            <if test="musicSinger!=null">
+                music_singer=#{musicSinger},
+            </if>
+            <if test="musicTime!=null">
+                music_time=#{musicTime},
+            </if>
+            <if test="musicLrcPath!=null">
+                music_lrc_src=#{musicLrcPath},
+            </if>
+            <if test="musicImagesPath!=null">
+                music_images=#{musicImagesPath},
+            </if>
+            <if test="musicImagesCount!=null">
+                music_images_count=#{musicImagesCount},
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>

@@ -36,8 +36,8 @@ public class MusicUtil
         return time;
     }
 
-//    public static void main(String[] args)
-//    {
-//        System.out.println(getMusicTime(new File("E:/test/Avril Lavigne - Innocence.mp3")));
-//    }
+    public static void main(String[] args)
+    {
+        System.out.println(getMusicTime(new File("D:/test/杨丞琳 - 点水.mp3")));
+    }
 }

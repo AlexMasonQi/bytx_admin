@@ -262,6 +262,13 @@
             <version>0.1.53</version>
         </dependency>
 
+        <!-- jaudiotagger -->
+        <dependency>
+            <groupId>net.jthink</groupId>
+            <artifactId>jaudiotagger</artifactId>
+            <version>2.2.6-PATHRIK</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -272,9 +279,9 @@
                 <version>3.7.0</version>
                 <configuration>
                     <release>10</release>
-                    <compilerArguments>
-                        <extdirs>/lib</extdirs>
-                    </compilerArguments>
+                    <!--<compilerArguments>-->
+                    <!--<extdirs>/lib</extdirs>-->
+                    <!--</compilerArguments>-->
                 </configuration>
                 <dependencies>
                     <dependency>

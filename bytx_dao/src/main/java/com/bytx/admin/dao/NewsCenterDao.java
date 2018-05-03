@@ -14,4 +14,10 @@ public interface NewsCenterDao
     NewsCenter selectNewsByNewsId(@Param("newsId") Integer newsId);
 
     List<NewsCenter> selectthreeNews();
+
+    List<NewsCenter> selectAllNews();
+
+    Integer addNews(NewsCenter newsCenter);
+
+    Integer updateNewsById(NewsCenter newsCenter);
 }

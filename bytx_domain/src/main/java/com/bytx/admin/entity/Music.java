@@ -11,7 +11,7 @@ public class Music implements Serializable
     private String musicTime;
     private String musicLrcPath;
     private String musicImagesPath;
-    private String musicImagesCount;
+    private Integer musicImagesCount;
     private Integer status;
 
     public Integer getId()
@@ -84,12 +84,12 @@ public class Music implements Serializable
         this.musicImagesPath = musicImagesPath;
     }
 
-    public String getMusicImagesCount()
+    public Integer getMusicImagesCount()
     {
         return musicImagesCount;
     }
 
-    public void setMusicImagesCount(String musicImagesCount)
+    public void setMusicImagesCount(Integer musicImagesCount)
     {
         this.musicImagesCount = musicImagesCount;
     }
