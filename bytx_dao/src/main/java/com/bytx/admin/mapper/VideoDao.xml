@@ -7,6 +7,7 @@
         <result column="video_src" property="videoPath"/>
         <result column="video_title" property="videoTitle"/>
         <result column="video_content" property="videoContent"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <!--根据ID查询视频-->
@@ -17,7 +18,7 @@
             video_title,
             video_content
         from company_video
-        where id = #{id}
+        where id = #{id} and status=1
     </select>
 
     <!--查询所有视频-->
@@ -26,7 +27,33 @@
             id,
             video_src,
             video_title,
-            video_content
+            video_content,
+            status
         from company_video
     </select>
+
+    <!--添加视频信息-->
+    <insert id="addVideo">
+        insert into company_video(video_src,video_title,video_content,status) values(#{videoPath},#{videoTitle},#{videoContent},#{status})
+    </insert>
+
+    <!--更新视频信息-->
+    <update id="updateVideo">
+        update company_video
+        <set>
+            <if test="videoPath!=null">
+                video_src=#{videoPath},
+            </if>
+            <if test="videoTitle!=null">
+                video_title=#{videoTitle},
+            </if>
+            <if test="videoContent!=null">
+                video_content=#{videoContent},
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>

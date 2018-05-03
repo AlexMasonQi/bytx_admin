@@ -28,6 +28,12 @@ public class MenuController extends BaseController
     @Autowired
     private NewsCenterQueryService newsCenterQueryService;
 
+    @Autowired
+    private MenuQueryService menuQueryService;
+
+    @Autowired
+    private VideoQueryService videoQueryService;
+
     @RequestMapping("/companyBaseInfo")
     public String showCompanyBaseInfo(Map model)
     {
@@ -77,12 +83,18 @@ public class MenuController extends BaseController
     @RequestMapping("/companyRotation")
     public String showCompanyRotation(Map model)
     {
+        List<Rotation> rotationList = menuQueryService.selectAllImages();
+        model.put("rotationList", rotationList);
+
         return "admin/companyrotation";
     }
 
     @RequestMapping("/companyVideo")
     public String showCompanyVideo(Map model)
     {
+        List<Video> videoList = videoQueryService.selectAllVideos();
+        model.put("videoList", videoList);
+
         return "admin/companyvideo";
     }
 

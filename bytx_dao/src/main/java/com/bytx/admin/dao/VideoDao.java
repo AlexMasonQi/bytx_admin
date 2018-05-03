@@ -12,4 +12,8 @@ public interface VideoDao
     Video selectVideoById(@Param("id") Integer id);
 
     List<Video> selectAllVideos();
+
+    Integer addVideo(Video video);
+
+    Integer updateVideo(Video video);
 }

@@ -1,192 +1,257 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src="./js/jquery.min.js"></script>
-  <script src="./js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <script src="./ckeditor/ckeditor.js"></script>
-  <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/ckeditor/ckeditor.js}"></script>
+    <title></title>
 </head>
 
 <body>
-  <nav class="navbar navbar-default">
+<nav th:replace="common/head"></nav>
 
-    <div class="container-fluid">
-      <div class="col-md-1"></div>
-      <div class="navbar-header col-md-5">
-        <a class="navbar-brand" href="#" style="width: 50px;padding: 0px">
-          <img alt="Brand" src="./images/logo.png" style="width: 100%;height: 100%;">
-        </a>
-        <p class="navbar-text">test</p>
-      </div>
-      <div class="collapse navbar-collapse col-md-3" id="bs-example-navbar-collapse-1">
-        <p class="navbar-text navbar-right">您好，admin&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="#" class="navbar-link">上次登录时间为：2018/06/15</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button>退出</button>
-        </p>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-  </nav>
-
-  <div class="col-md-1"></div>
-  <div class="col-md-2">
+<div class="col-md-1"></div>
+<div class="col-md-2">
     <div class="list-group">
-      <a href="./companyadmin.html" class="list-group-item">
-        导航栏
-      </a>
-      <a href="./companybaseinfo.html" class="list-group-item">基本信息</a>
-      <a href="./companyrotation.html" class="list-group-item">轮播图</a>
-      <a href="./companynews.html" class="list-group-item">新闻中心</a>
-      <a href="./companymedia.html" class="list-group-item">主营业务</a>
-      <a href="./companyinfo.html" class="list-group-item">概况</a>
-      <a href="./companymusic.html" class="list-group-item">音乐</a>
-      <a href="#" class="list-group-item  active">video</a>
+        <a th:href="@{/companyadmin}" class="list-group-item">导航栏</a>
+        <a th:href="@{/menu/companyBaseInfo}" class="list-group-item">基本信息</a>
+        <a th:href="@{/menu/companyRotation}" class="list-group-item">轮播图</a>
+        <a th:href="@{/menu/companyNews}" class="list-group-item">新闻中心</a>
+        <a th:href="@{/menu/companyMedia}" class="list-group-item">主营业务</a>
+        <a th:href="@{/menu/companyInfo}" class="list-group-item">概况</a>
+        <a th:href="@{/menu/companyMusic}" class="list-group-item">音乐</a>
+        <a th:href="@{/menu/companyVideo}" class="list-group-item active">video</a>
     </div>
-  </div>
-  <div class="well well-lg col-md-8">
+</div>
+<div class="well well-lg col-md-8">
     <button type="button" class="btn btn-primary btn-lg addCompanyVideo" data-toggle="modal" data-target="#myModal">
-      增加mv
+        增加mv
     </button>
-    <table class="table table-condensed" style="height: 50px;line-height:50xp;text-align: center">
-      <tr>
-        <td>id</td>
-        <td>来源</td>
-        <td>标题</td>
-        <td>内容</td>
-        <td>操作</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>https</td>
-        <td>这里是标题1</td>
-        <td>这里是内容1</td>
-        <td>
-          <span class="glyphicon glyphicon-pencil updateCompanyVideo" aria-hidden="true" data-toggle="modal" data-target="#myModal"></span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span class="glyphicon glyphicon-trash deleteCompanyVideo" aria-hidden="true"></span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span class="glyphicon glyphicon-arrow-up upCompanyVideo" aria-hidden="true"></span>
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>httpsdsdddd</td>
-        <td>这里是标题2</td>
-        <td>这里是内容2</td>
-        <td>
-          <span class="glyphicon glyphicon-pencil updateCompanyVideo" aria-hidden="true" data-toggle="modal" data-target="#myModal"></span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span class="glyphicon glyphicon-trash deleteCompanyVideo" aria-hidden="true"></span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span class="glyphicon glyphicon-arrow-up upCompanyVideo" aria-hidden="true"></span>
-        </td>
-      </tr>
+    <table class="table table-condensed" style="height: 50px;line-height:50px;text-align: center">
+        <tr>
+            <td>id</td>
+            <td>来源</td>
+            <td>标题</td>
+            <td>内容</td>
+            <td>状态</td>
+            <td>操作</td>
+        </tr>
+        <tr th:each="video:${videoList}">
+            <td th:text="${video.id}"></td>
+            <td th:text="${video.videoPath}"></td>
+            <td th:text="${video.videoTitle}"></td>
+            <td th:text="${video.videoContent}"></td>
+            <td th:text="${video.status}==1?'正常':'禁用'"></td>
+            <td>
+                <span class="glyphicon glyphicon-pencil updateCompanyVideo" aria-hidden="true" data-toggle="modal"
+                      data-target="#updateModal"></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-trash deleteCompanyVideo" aria-hidden="true"></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class="glyphicon glyphicon-arrow-up upCompanyVideo" aria-hidden="true"></span>
+            </td>
+        </tr>
     </table>
 
-
-
+    <!--添加视频信息-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title" id="myModalLabel">上传视频</h4>
-            <span id="testID"></span>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="src">来源</label>
-                <input type="text" class="form-control" id="src" placeholder="来源">
-              </div>
-              <div class="form-group">
-                <label for="title">标题</label>
-                <input type="text" class="form-control" id="title" placeholder="标题">
-              </div>
-              <div class="form-group">
-                <label for="title">内容</label>
-                <textarea name="ckeditor" class="form-control" id="ckeditor" cols="30" rows="10"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary setCompanyVideo">更新</button>
-          </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">上传视频</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="src">来源</label>
+                            <input type="text" class="form-control" id="src" placeholder="来源">
+                        </div>
+                        <div class="form-group">
+                            <label for="title">标题</label>
+                            <input type="text" class="form-control" id="title" placeholder="标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="ckeditor">内容</label>
+                            <textarea name="ckeditor" class="form-control" id="ckeditor" cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="status1">状态</label><br>
+                            <input type="radio" name="status" value="1" id="status1" checked> 启用
+                            <input type="radio" name="status" value="0" id="status2"> 禁用
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary btnSubmit">提交</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script>
-    CKEDITOR.replace('ckeditor');
+
+    <!--更新视频信息-->
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel1">上传视频</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="updateForm" enctype="multipart/form-data">
+                        <input type="hidden" id="updateId">
+                        <div class="form-group">
+                            <label for="updateSrc">来源</label>
+                            <input type="text" class="form-control" id="updateSrc" placeholder="来源">
+                        </div>
+                        <div class="form-group">
+                            <label for="updateTitle">标题</label>
+                            <input type="text" class="form-control" id="updateTitle" placeholder="标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="updateCkeditor">内容</label>
+                            <textarea name="updateCkeditor" class="form-control" id="updateCkeditor" cols="30"
+                                      rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateStatus1">状态</label><br>
+                            <input type="radio" name="updateStatus" value="1" id="updateStatus1"> 启用
+                            <input type="radio" name="updateStatus" value="0" id="updateStatus2"> 禁用
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary btnUpdate">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
+
     $(function () {
-      $(".updateCompanyVideo").click(function () {
-        let id = $(this).parent().prev().prev().prev().prev().html();
-        let src = $(this).parent().prev().prev().prev().html();
-        let title = $(this).parent().prev().prev().html();
-        let content = $(this).parent().prev().html();
-        $("#testID").empty().append(id);
-        $("#src").val(src);
-        $("#title").val(title);
-        CKEDITOR.instances.ckeditor.setData(content);
-      });
-      $(".addCompanyVideo").click(function () {
-        $("#testID").empty();
-        $("#src").val("");
-        $("#title").val("");
-        CKEDITOR.instances.ckeditor.setData("");
-      });
-      $(".setCompanyVideo").click(function () {
-        $.ajax({
-          type: "post",
-          dataType: "text",
-          url: "",
-          data: {
-            id: $("#testID").val(),//有则更新  没有则插入
-            src : $("#src").val(),//直接覆盖
-            title: $("#title").val(),//直接覆盖
-            content: CKEDITOR.instances.ckeditor.getData(),//直接覆盖 
-          },
-          success: function (data) {
-            alert("数据更新成功")
-          }
+        CKEDITOR.replace('ckeditor');
+        
+        //添加图片
+        $(".btnSubmit").click(function () {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                url: contextPath + "/video/addVideo.do",
+                data: {
+                    "videoPath": $("#src").val(),
+                    "videoTitle": $("#title").val(),
+                    "videoContent": CKEDITOR.instances.ckeditor.getData(),
+                    "status": $("input:radio[name='status']:checked").val()
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        alert("添加成功");
+                        window.location.href = contextPath + "/menu/companyVideo";
+                    } else {
+                        alert("添加失败");
+                    }
+                }
+            });
         });
-      });
-      $(".deleteCompanyVideo").click(function(){
-        $.ajax({
-          type: "post",
-          dataType: "text",
-          url: "",
-          data: {
-            id: $(this).parent().prev().prev().prev().prev().html(),
-          },
-          success: function (data) {
-            alert("数据更新成功")
-          }
+        CKEDITOR.replace("updateCkeditor");
+
+        $(".updateCompanyVideo").click(function () {
+            let id = $(this).parent().prev().prev().prev().prev().prev().text();
+            let videoPath = $(this).parent().prev().prev().prev().prev().text();
+            let videoTitle = $(this).parent().prev().prev().prev().text();
+            let videoContent = $(this).parent().prev().prev().text();
+            let statusName = $(this).parent().prev().text();
+
+            if (statusName === "正常") {
+                $("#updateStatus1").attr("checked", "checked");
+                $("#updateStatus2").removeAttr("checked");
+            }
+            else if (statusName === "禁用") {
+                $("#updateStatus1").removeAttr("checked");
+                $("#updateStatus2").attr("checked", "checked");
+            }
+
+            $("#updateId").val(id);
+            $("#updateSrc").val(videoPath);
+            $("#updateTitle").val(videoTitle);
+            CKEDITOR.instances.updateCkeditor.setData(videoContent);
         });
-      })
-      $(".upCompanyVideo").click(function(){
-        $.ajax({
-          type: "post",
-          dataType: "text",
-          url: "",
-          data: {
-            id: $(this).parent().prev().prev().prev().prev().html(),
-          },
-          success: function (data) {
-            alert("数据更新成功")
-          }
+
+        //更新图片
+        $(".btnUpdate").click(function () {
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                url: contextPath + "/video/updateVideo.do",
+                data: {
+                    "id": $("#updateId").val(),
+                    "videoPath": $("#updateSrc").val(),
+                    "videoTitle": $("#updateTitle").val(),
+                    "videoContent": CKEDITOR.instances.updateCkeditor.getData(),
+                    "status": $("input:radio[name='updateStatus']:checked").val()
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        alert("更新成功");
+                        window.location.href = contextPath + "/menu/companyVideo";
+                    } else {
+                        alert("更新失败");
+                    }
+                }
+            });
         });
-      })
-    })
-  </script>
+
+        //启用/禁用图片
+        $(".deleteCompanyVideo").click(function () {
+            let id = $(this).parent().prev().prev().prev().prev().prev().text();
+            let statusName = $(this).parent().prev().text();
+            let stat;
+
+            if (statusName === "正常") {
+                stat = 0;
+            }
+            else if (statusName === "禁用") {
+                stat = 1;
+            }
+
+            $.ajax({
+                type: "post",
+                dataType: "text",
+                url: contextPath + "/video/updateVideo.do",
+                data: {
+                    "id": id,
+                    "status": stat
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        alert("操作成功");
+                        window.location.href = contextPath + "/menu/companyVideo";
+                    }
+                    else {
+                        alert("操作失败");
+                    }
+                }
+            });
+        });
+    });
+
+    /*]]>*/
+</script>
 </body>
 
 </html>

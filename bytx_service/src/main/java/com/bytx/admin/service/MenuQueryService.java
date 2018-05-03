@@ -53,4 +53,9 @@ public class MenuQueryService
     {
         return rotationDao.selectImageRotationByCount(count);
     }
+
+    public List<Rotation> selectAllImages()
+    {
+        return rotationDao.selectAllImages();
+    }
 }

@@ -12,4 +12,10 @@ public interface RotationDao
     int selectImagesCount();
 
     List<Rotation> selectImageRotationByCount(@Param("count") Integer count);
+
+    List<Rotation> selectAllImages();
+
+    Integer addImage(Rotation rotation);
+
+    Integer updateImage(Rotation rotation);
 }

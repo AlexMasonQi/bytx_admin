@@ -8,6 +8,7 @@
         <result column="description" property="description"/>
         <result column="associate_description" property="associateDescription"/>
         <result column="image_count" property="imageCount"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <select id="selectImagesCount" resultType="java.lang.Integer">
@@ -20,8 +21,41 @@
             id,
             image_url,
             description,
-            associate_description
+            associate_description,
+            status
         from company_rotation
         where image_count = #{count}
     </select>
+
+    <select id="selectAllImages" resultMap="rotationMap">
+        select id,image_url,description,associate_description,image_count,status from company_rotation
+    </select>
+
+    <!--添加图片信息-->
+    <insert id="addImage">
+        insert into company_rotation(image_url,description,associate_description,image_count,status) values(#{imageUrl},#{description},#{associateDescription},#{imageCount},#{status})
+    </insert>
+
+    <!--更新图片信息-->
+    <update id="updateImage">
+        update company_rotation
+        <set>
+            <if test="imageUrl!=null">
+                image_url=#{imageUrl},
+            </if>
+            <if test="description!=null">
+                description=#{description},
+            </if>
+            <if test="associateDescription!=null">
+                associate_description=#{associateDescription},
+            </if>
+            <if test="imageCount!=null">
+                image_count=#{imageCount},
+            </if>
+            <if test="status!=null">
+                status=#{status}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
 </mapper>
