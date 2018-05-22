@@ -85,7 +85,7 @@
                         </div>
                         <div class="form-group">
                             <label for="lrc">歌词</label>
-                            <input type="file" name="lrcFile" id="lrc">
+                            <input type="file" name="lrcFile" id="lrc" onchange="handleFiles(this.files)">
                             <p style="color:red;display: none">重新上传请选择文件</p>
                         </div>
                         <div class="form-group">
@@ -139,7 +139,7 @@
                         </div>
                         <div class="form-group">
                             <label for="updateLrc">歌词</label>
-                            <input type="file" name="updateLrcFile" id="updateLrc">
+                            <input type="file" name="updateLrcFile" id="updateLrc" onchange="handleFiles(this.files)">
                             <p style="color:red;display: none">重新上传请选择文件</p>
                         </div>
                         <div class="form-group">
@@ -174,6 +174,7 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var contextPath = /*[[${#httpServletRequest.contextPath}]]*/'';
+    var lrcText = "";
 
     $(function () {
 
@@ -186,6 +187,7 @@
                     "musicImagesCount": $("#imageNum").val(),
                     "musicSinger": $("#singer").val(),
                     "musicName": $("#title").val(),
+                    "musicLrc": lrcText,
                     "status": $("input:radio[name='status']:checked").val()
                 },
                 success: function (data) {
@@ -234,6 +236,7 @@
                     "musicImagesCount": $("#updateImageNum").val(),
                     "musicSinger": $("#updateSinger").val(),
                     "musicName": $("#updateTitle").val(),
+                    "musicLrc": lrcText,
                     "status": $("input:radio[name='updateStatus']:checked").val()
                 },
                 success: function (data) {
@@ -282,6 +285,22 @@
                    });
         });
     });
+
+    function handleFiles(files) {
+        if (files.length) {
+            var file = files[0];
+            var reader = new FileReader();
+            reader.readAsBinaryString(file);
+            reader.onload = function (e) {
+                lrcText = e.target.result;
+                console.log(lrcText);
+            }
+        }
+        else {
+            console.log("a")
+        }
+
+    }
 
     /*]]>*/
 </script>

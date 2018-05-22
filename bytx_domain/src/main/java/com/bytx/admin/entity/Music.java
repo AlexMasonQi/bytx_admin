@@ -9,7 +9,7 @@ public class Music implements Serializable
     private String musicName;
     private String musicSinger;
     private String musicTime;
-    private String musicLrcPath;
+    private String musicLrc;
     private String musicImagesPath;
     private Integer musicImagesCount;
     private Integer status;
@@ -64,14 +64,14 @@ public class Music implements Serializable
         this.musicTime = musicTime;
     }
 
-    public String getMusicLrcPath()
+    public String getMusicLrc()
     {
-        return musicLrcPath;
+        return musicLrc;
     }
 
-    public void setMusicLrcPath(String musicLrcPath)
+    public void setMusicLrc(String musicLrc)
     {
-        this.musicLrcPath = musicLrcPath;
+        this.musicLrc = musicLrc;
     }
 
     public String getMusicImagesPath()
@@ -107,6 +107,6 @@ public class Music implements Serializable
     @Override
     public String toString()
     {
-        return "Music{" + "id=" + id + ", musicPath='" + musicPath + '\'' + ", musicName='" + musicName + '\'' + ", musicSinger='" + musicSinger + '\'' + ", musicTime='" + musicTime + '\'' + ", musicLrcPath='" + musicLrcPath + '\'' + ", musicImagesPath='" + musicImagesPath + '\'' + ", musicImagesCount='" + musicImagesCount + '\'' + ", status=" + status + '}';
+        return "Music{" + "id=" + id + ", musicPath='" + musicPath + '\'' + ", musicName='" + musicName + '\'' + ", musicSinger='" + musicSinger + '\'' + ", musicTime='" + musicTime + '\'' + ", musicLrc='" + musicLrc + '\'' + ", musicImagesPath='" + musicImagesPath + '\'' + ", musicImagesCount=" + musicImagesCount + ", status=" + status + '}';
     }
 }

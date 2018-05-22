@@ -8,7 +8,7 @@
         <result column="music_name" property="musicName"/>
         <result column="music_singer" property="musicSinger"/>
         <result column="music_time" property="musicTime"/>
-        <result column="music_lrc_src" property="musicLrcPath"/>
+        <result column="music_lrc" property="musicLrc"/>
         <result column="music_images" property="musicImagesPath"/>
         <result column="music_images_count" property="musicImagesCount"/>
         <result column="status" property="status"/>
@@ -22,7 +22,7 @@
             music_name,
             music_singer,
             music_time,
-            music_lrc_src,
+            music_lrc,
             music_images,
             music_images_count,
             status
@@ -38,7 +38,7 @@
             music_name,
             music_singer,
             music_time,
-            music_lrc_src,
+            music_lrc,
             music_images,
             music_images_count,
             status
@@ -47,8 +47,8 @@
 
     <!--添加歌曲-->
     <insert id="addMusic">
-        insert into company_music (music_src, music_name, music_singer, music_time, music_lrc_src, music_images, music_images_count, status)
-        values (#{musicPath}, #{musicName}, #{musicSinger}, #{musicTime}, #{musicLrcPath}, #{musicImagesPath},
+        insert into company_music (music_src, music_name, music_singer, music_time, music_lrc, music_images, music_images_count, status)
+        values (#{musicPath}, #{musicName}, #{musicSinger}, #{musicTime}, #{musicLrc}, #{musicImagesPath},
                 #{musicImagesCount}, #{status})
     </insert>
 
@@ -68,8 +68,8 @@
             <if test="musicTime!=null">
                 music_time=#{musicTime},
             </if>
-            <if test="musicLrcPath!=null">
-                music_lrc_src=#{musicLrcPath},
+            <if test="musicLrc!=null">
+                music_lrc=#{musicLrc},
             </if>
             <if test="musicImagesPath!=null">
                 music_images=#{musicImagesPath},
