@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/upload")
+@RequestMapping("/uploadCK")
 public class FilesController extends BaseController
 {
     private Logger logger = LoggerFactory.getLogger(this.getClass());

@@ -38,5 +38,5 @@ CKEDITOR.editorConfig = function (config) {
 
     config.image_previewText = '';
 
-    config.filebrowserImageUploadUrl = '/upload/ckeditor_image?type=Image';
+    config.filebrowserImageUploadUrl = '/uploadCK/ckeditor_image?type=Image';
 };

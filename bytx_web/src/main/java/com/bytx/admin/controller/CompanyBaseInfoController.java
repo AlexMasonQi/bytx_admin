@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/info")
@@ -48,38 +49,42 @@ public class CompanyBaseInfoController extends BaseController
         MultipartFile logoFile = ((MultipartHttpServletRequest) request).getFile("logo");
         MultipartFile codeFile = ((MultipartHttpServletRequest) request).getFile("code");
 
-        String logoName = logoFile.getOriginalFilename();
-        String codeName = codeFile.getOriginalFilename();
-
-        String rootPath = basePath + storageImagePath + "/" + "basic_info";
-        String logoPath = rootPath + "/" + "logo" + "/" + logoName;
-        String codePath = rootPath + "/" + "qrcode" + "/" + codeName;
-
-        String remoteLogoPath = "/data/wwwroot/default" + storageImagePath + "/basic_info/logo";
-        String remoteLogoUrl = accessImageUrl + storageImagePath + "/basic_info/logo/" + logoName;
-        String remoteCodePath = "/data/wwwroot/default" + storageImagePath + "/basic_info/qrcode";
-        String remoteCodeUrl = accessImageUrl + storageImagePath + "/basic_info/qrcode/" + codeName;
-
-        File lFile = new File(logoPath);
-        File qFile = new File(codePath);
-
-        try
+        if (!Objects.isNull(logoFile) && !Objects.isNull(codeFile))
         {
-            FileUtils.forceMkdir(lFile.getParentFile());
-            FileUtils.forceMkdir(qFile.getParentFile());
+            String logoName = logoFile.getOriginalFilename();
 
-            logoFile.transferTo(lFile);
-            codeFile.transferTo(qFile);
+            String codeName = codeFile.getOriginalFilename();
 
-            SFTPUtil.uploadFile(BaseController.channelSftp, logoPath, remoteLogoPath);
-            SFTPUtil.uploadFile(BaseController.channelSftp, codePath, remoteCodePath);
+            String rootPath = basePath + storageImagePath + "/" + "basic_info";
+            String logoPath = rootPath + "/" + "logo" + "/" + logoName;
+            String codePath = rootPath + "/" + "qrcode" + "/" + codeName;
 
-            basicInfo.setBasicLogo(remoteLogoUrl);
-            basicInfo.setBasicQrcode(remoteCodeUrl);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+            String remoteLogoPath = "/data/wwwroot/default" + storageImagePath + "/basic_info/logo";
+            String remoteLogoUrl = accessImageUrl + storageImagePath + "/basic_info/logo/" + logoName;
+            String remoteCodePath = "/data/wwwroot/default" + storageImagePath + "/basic_info/qrcode";
+            String remoteCodeUrl = accessImageUrl + storageImagePath + "/basic_info/qrcode/" + codeName;
+
+            File lFile = new File(logoPath);
+            File qFile = new File(codePath);
+
+            try
+            {
+                FileUtils.forceMkdir(lFile.getParentFile());
+                FileUtils.forceMkdir(qFile.getParentFile());
+
+                logoFile.transferTo(lFile);
+                codeFile.transferTo(qFile);
+
+                SFTPUtil.uploadFile(BaseController.channelSftp, logoPath, remoteLogoPath);
+                SFTPUtil.uploadFile(BaseController.channelSftp, codePath, remoteCodePath);
+
+                basicInfo.setBasicLogo(remoteLogoUrl);
+                basicInfo.setBasicQrcode(remoteCodeUrl);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         Integer tag = companyBaseInfoPersistenceService.updateCompanyBaseInfo(basicInfo);

@@ -9,6 +9,7 @@
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/jquery.form.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/layer/layer.js}"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <title></title>
 
@@ -31,11 +32,13 @@
                         "descript": $("#descript").val()//关键词
                     },
                     success: function (data) {
+                        console.log(data);
                         if (data == 1) {
-                            alert("更新基本信息成功!");
+                            layer.msg("更新基本信息成功!");
+                            window.location.href = contextPath + "/menu/companyBaseInfo";
                         }
                         else {
-                            alert("更新失败");
+                            layer.alert("更新失败");
                         }
                     }
                 };

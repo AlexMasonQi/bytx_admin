@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -58,8 +59,10 @@ public class RotationController extends BaseController
 
     @RequestMapping("/updateRotation")
     @ResponseBody
-    public Integer updateImage(MultipartFile updateImageFile, HttpServletRequest request, Rotation rotation)
+    public Integer updateImage(HttpServletRequest request, Rotation rotation)
     {
+        MultipartFile updateImageFile = ((MultipartHttpServletRequest) request).getFile("updateImageFile");
+
         String basePath = request.getServletContext().getRealPath("/");
 
         if (updateImageFile != null)
@@ -91,6 +94,13 @@ public class RotationController extends BaseController
             }
         }
 
+        return menuPersistenceService.updateImage(rotation);
+    }
+
+    @RequestMapping("/updateStatus")
+    @ResponseBody
+    public Integer updateRotationStatus(Rotation rotation)
+    {
         return menuPersistenceService.updateImage(rotation);
     }
 }

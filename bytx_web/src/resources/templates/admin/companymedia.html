@@ -11,6 +11,7 @@
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:src="@{/ckeditor/ckeditor.js}"></script>
+    <script th:src="@{/js/layer/layer.js}"></script>
     <title></title>
 </head>
 
@@ -174,10 +175,11 @@
                 },
                 success: function (data) {
                     if (data == 1) {
-                        alert("更新成功");
+                        layer.msg("更新成功");
+                        window.location.href = contextPath + "/menu/companyMedia";
                     }
                     else {
-                        alert("更新失败");
+                        layer.alert("更新失败");
                     }
                 }
             };

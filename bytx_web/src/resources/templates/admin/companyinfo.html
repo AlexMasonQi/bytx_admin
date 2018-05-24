@@ -10,6 +10,7 @@
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:src="@{/ckeditor/ckeditor.js}"></script>
+    <script th:src="@{/js/layer/layer.js}"></script>
     <title></title>
 </head>
 
@@ -95,22 +96,23 @@
         //更新
         $(".save").click(function () {
             $.ajax({
-                       type: "post",
-                       dataType: "text",
-                       url: contextPath + "/companyInfo/updateInfo",
-                       data: {
-                           "id": $("#sm").html(),//这个是所属分类的ID
-                           "content": CKEDITOR.instances.ckeditor.getData()
-                       },
-                       success: function (data) {
-                           if (data == 1) {
-                               alert("数据更新成功");
-                           }
-                           else {
-                               alert("更新失败");
-                           }
-                       }
-                   });
+                type: "post",
+                dataType: "text",
+                url: contextPath + "/companyInfo/updateInfo",
+                data: {
+                    "id": $("#sm").html(),//这个是所属分类的ID
+                    "content": CKEDITOR.instances.ckeditor.getData()
+                },
+                success: function (data) {
+                    if (data == 1) {
+                        layer.msg("数据更新成功");
+                        window.location.href = contextPath + "/menu/companyInfo";
+                    }
+                    else {
+                        layer.alert("更新失败");
+                    }
+                }
+            });
         });
     });
 

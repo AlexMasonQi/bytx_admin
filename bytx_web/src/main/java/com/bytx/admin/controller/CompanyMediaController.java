@@ -8,15 +8,16 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/media")
@@ -39,8 +40,10 @@ public class CompanyMediaController extends BaseController
 
     @RequestMapping("/updateMediaInfo")
     @ResponseBody
-    public Integer updateMediaInfo(@RequestParam("imageFile") MultipartFile file, HttpServletRequest request, Media media)
+    public Integer updateMediaInfo(HttpServletRequest request, Media media)
     {
+        MultipartFile file = ((MultipartHttpServletRequest) request).getFile("imageFile");
+
         List<Media> mediaList = mediaQueryService.selectAllMedia();
         for (var media1 : mediaList)
         {
@@ -51,27 +54,30 @@ public class CompanyMediaController extends BaseController
             }
         }
 
-        String originalFileName = file.getOriginalFilename();
-        String basePath = request.getServletContext().getRealPath("/");
-        String rootPath = basePath + storageImagePath + "/media";
-        String tempPath = rootPath + "/" + media.getMediaId() + "/" + originalFileName;
-
-        File tempFile = new File(tempPath);
-        String remotePath = "/data/wwwroot/default" + storageImagePath + "/media/" + media.getMediaId();
-        String remoteUrl = accessImageUrl + storageImagePath + "/media/" + media.getMediaId() + "/" + originalFileName;
-
-        try
+        if (!Objects.isNull(file))
         {
-            FileUtils.forceMkdir(tempFile.getParentFile());
-            file.transferTo(tempFile);
+            String originalFileName = file.getOriginalFilename();
+            String basePath = request.getServletContext().getRealPath("/");
+            String rootPath = basePath + storageImagePath + "/media";
+            String tempPath = rootPath + "/" + media.getMediaId() + "/" + originalFileName;
 
-            SFTPUtil.uploadFile(BaseController.channelSftp, tempPath, remotePath);
+            File tempFile = new File(tempPath);
+            String remotePath = "/data/wwwroot/default" + storageImagePath + "/media/" + media.getMediaId();
+            String remoteUrl = accessImageUrl + storageImagePath + "/media/" + media.getMediaId() + "/" + originalFileName;
 
-            media.setImages(remoteUrl);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+            try
+            {
+                FileUtils.forceMkdir(tempFile.getParentFile());
+                file.transferTo(tempFile);
+
+                SFTPUtil.uploadFile(BaseController.channelSftp, tempPath, remotePath);
+
+                media.setImages(remoteUrl);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return companyMediaPersistenceService.updateMedia(media);

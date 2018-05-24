@@ -80,6 +80,8 @@ public class MusicController extends BaseController
     public Integer updateMusic(HttpServletRequest request, Music music)
     {
         String basePath = request.getServletContext().getRealPath("/");
+//        MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+//        MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
 
         MultipartFile imgFile = ((MultipartHttpServletRequest) request).getFile("updateImageFile");
         MultipartFile musicFile = ((MultipartHttpServletRequest) request).getFile("updateMusicFile");
@@ -121,6 +123,13 @@ public class MusicController extends BaseController
             }
         }
 
+        return musicPersistenceService.updateMusicInfoById(music);
+    }
+
+    @RequestMapping("/updateMusicStatus")
+    @ResponseBody
+    public Integer updateMusicStatus(Music music)
+    {
         return musicPersistenceService.updateMusicInfoById(music);
     }
 }

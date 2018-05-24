@@ -10,6 +10,7 @@
     <script th:src="@{/js/jquery.form.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/layer/layer.js}"></script>
     <title></title>
 </head>
 
@@ -161,10 +162,10 @@
                 },
                 success: function (data) {
                     if (data == 1) {
-                        alert("添加成功");
+                        layer.msg("添加成功");
                         window.location.href = contextPath + "/menu/companyRotation";
                     } else {
-                        alert("添加失败");
+                        layer.alert("添加失败");
                     }
                 }
             };
@@ -204,10 +205,10 @@
                 },
                 success: function (data) {
                     if (data == 1) {
-                        alert("更新成功");
+                        layer.msg("更新成功");
                         window.location.href = contextPath + "/menu/companyRotation";
                     } else {
-                        alert("更新失败");
+                        layer.alert("更新失败");
                     }
                 }
             };
@@ -230,18 +231,18 @@
             $.ajax({
                 type: "post",
                 dataType: "text",
-                url: contextPath + "/rotation/updateRotation.do",
+                url: contextPath + "/rotation/updateStatus.do",
                 data: {
                     "id": id,
                     "status": stat
                 },
                 success: function (data) {
                     if (data == 1) {
-                        alert("操作成功");
+                        layer.msg("操作成功");
                         window.location.href = contextPath + "/menu/companyRotation";
                     }
                     else {
-                        alert("操作失败");
+                        layer.alert("操作失败");
                     }
                 }
             });
